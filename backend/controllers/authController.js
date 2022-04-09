@@ -254,6 +254,26 @@ const updateUsername = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Update Username
+//@route    PUT /api/v1/auth/profile/:id
+//@access   Private
+const getRegisteredUsers = asyncHandler(async (req, res) => {
+  try {
+    const response = await db.users.findAndCountAll({
+      attributes: { exclude: ['password'], order: ['createdAt', 'DESC'] },
+    });
+    if (response) {
+      res.status(200).json({
+        status: true,
+        data: response,
+      });
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
+
 //  Get token from Model and create cookie
 const generateCookieResponse = (statusCode, res, userId, userRole) => {
   const token = generateToken(userId, userRole);
@@ -283,4 +303,5 @@ module.exports = {
   userProfile,
   updateUsername,
   deleteAccount,
+  getRegisteredUsers,
 };
