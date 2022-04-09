@@ -20,10 +20,10 @@ const sequelize = new Sequelize(
 sequelize
   .authenticate()
   .then(() => {
-    console.log('connected to DB');
+    console.log(`Database connection successfull.`.cyan.bold.underline);
   })
   .catch((error) => {
-    console.log('Error' + error);
+    console.log('Error' + error.red.bold);
   });
 
 const db = {};
