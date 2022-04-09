@@ -4,6 +4,7 @@ const {
   registerUser,
   userProfile,
   updateUsername,
+  deleteAccount,
 } = require('../controllers/authController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const { verifyUserRoles } = require('../middleware/roleMiddleware');
@@ -17,5 +18,6 @@ router.route('/login').post(loginUser);
 router
   .route('/profile/:id')
   .get(verifyToken, userProfile)
-  .put(verifyToken, updateUsername);
+  .put(verifyToken, updateUsername)
+  .delete(verifyToken, deleteAccount);
 module.exports = router;

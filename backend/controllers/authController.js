@@ -62,7 +62,7 @@ const registerUser = asyncHandler(async (req, res) => {
       password: hashedPassword,
       phoneNumber: phone_number,
       email,
-      userRole: `${ROLES.user},${ROLES.admin}`,
+      userRole: `${ROLES.user}`,
       lastname: last_name,
       firstname: first_name,
     });
@@ -127,6 +127,44 @@ const userProfile = asyncHandler(async (req, res) => {
     } else {
       res.status(400);
       throw new Error('Inavlid Credentials');
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
+
+//@desc     DELETE User Profile
+//@route    DELETE /api/v1/auth/profile/:id
+//@access   Private
+const deleteAccount = asyncHandler(async (req, res) => {
+  //  check if userid exist
+  const { id } = req.params;
+  if (!id) {
+    res.status(400);
+    throw new Error('Inavlid Request');
+  }
+  try {
+    //  check db to see if user exist
+    const user = await db.users.findOne({
+      where: {
+        userid: req.user.userid,
+      },
+    });
+    //  delete account
+    if (user) {
+      const response = await db.users.destroy({
+        where: { userid: req.user.userid },
+      });
+      if (response) {
+        res.status(200).json({
+          status: true,
+          message: 'Account successfully deleted.',
+        });
+      } else {
+        res.status(400);
+        throw new Error('Error Processing your request');
+      }
     }
   } catch (error) {
     res.status(400);
@@ -244,4 +282,5 @@ module.exports = {
   loginUser,
   userProfile,
   updateUsername,
+  deleteAccount,
 };
