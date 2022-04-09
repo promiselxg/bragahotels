@@ -17,9 +17,9 @@ app.use(cookieParser());
 //app.use('/api/room', require('./backend/routes/roomRoutes'));
 app.use('/api/v1/auth', require('./backend/routes/authRoutes'));
 //  404 route
-// app.use('*', (req, res) =>
-//   res.status(404).json({ message: 'The requested route does not exist' })
-// );
+app.use('*', (req, res) =>
+  res.status(404).json({ message: 'The requested route does not exist' })
+);
 //  custom error handler
 app.use(errorHandler);
 //  server conncetion

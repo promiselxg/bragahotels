@@ -1,5 +1,10 @@
 const express = require('express');
-const { loginUser, registerUser } = require('../controllers/authController');
+const {
+  loginUser,
+  registerUser,
+  userProfile,
+  updateUsername,
+} = require('../controllers/authController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const { verifyUserRoles } = require('../middleware/roleMiddleware');
 const ROLES = require('../utils/roles');
@@ -7,9 +12,10 @@ const ROLES = require('../utils/roles');
 const router = express.Router();
 
 // Mount Routes
-router
-  .route('/register')
-  .post(verifyToken, verifyUserRoles(ROLES.admin), registerUser);
+router.route('/register').post(registerUser);
 router.route('/login').post(loginUser);
-
+router
+  .route('/profile/:id')
+  .get(verifyToken, userProfile)
+  .put(verifyToken, updateUsername);
 module.exports = router;
