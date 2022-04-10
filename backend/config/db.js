@@ -33,6 +33,7 @@ db.sequelize = sequelize;
 
 // create Table
 db.users = require('../model/userModel')(sequelize, DataTypes);
+db.rooms = require('../model/roomModel')(sequelize, DataTypes);
 
 db.sequelize.sync({ force: false }).then(() => {});
 
