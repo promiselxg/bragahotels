@@ -89,6 +89,66 @@ const addRoom = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Get All Rooms
+//@route    GET /api/v1/rooms
+//@access   Public
+const getRooms = asyncHandler(async (req, res) => {
+  try {
+    const { rows, count } = await db.rooms.findAndCountAll({
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+        order: ['createdAt', 'DESC'],
+      },
+    });
+    if (rows) {
+      res.status(200).json({
+        status: true,
+        count,
+        data: rows,
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: 'No record found.',
+      });
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
+
+//@desc     Get Single Room
+//@route    GET /api/v1/rooms/:id
+//@access   Public
+const getSingleRoom = asyncHandler(async (req, res) => {
+  //  get id
+  const { id } = req.params;
+  //  ccheck if it si empty
+  if (id === '') {
+    res.status(400).json({
+      status: false,
+      message: 'Invalid Request',
+    });
+  }
+  try {
+    const room = await db.rooms.findOne({ where: { roomid: id } });
+    if (room) {
+      res.status(200).json({
+        status: true,
+        data: room,
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        message: 'Requested room was not found.',
+      });
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
 //  upload multiple image function
 const cloudinaryImageUploadMethod = asyncHandler(async (file) => {
   return new Promise((resolve) => {
@@ -109,4 +169,6 @@ const cloudinaryImageUploadMethod = asyncHandler(async (file) => {
 
 module.exports = {
   addRoom,
+  getRooms,
+  getSingleRoom,
 };
