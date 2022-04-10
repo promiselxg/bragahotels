@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.urlencoded({ limit: '50mb', extended: false }));
 app.use(cookieParser());
 //  mount routes
-//app.use('/api/room', require('./backend/routes/roomRoutes'));
+app.use('/api/room', require('./backend/routes/roomRoutes'));
 app.use('/api/v1/auth', require('./backend/routes/authRoutes'));
 //  404 route
 app.use('*', (req, res) =>
