@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.urlencoded({ limit: '50mb', extended: false }));
 app.use(cookieParser());
 //  mount routes
-app.use('/api/room', require('./backend/routes/roomRoutes'));
+app.use('/api/v1/rooms', require('./backend/routes/roomRoutes'));
 app.use('/api/v1/auth', require('./backend/routes/authRoutes'));
 //  404 route
 app.use('*', (req, res) =>
@@ -23,4 +23,4 @@ app.use('*', (req, res) =>
 //  custom error handler
 app.use(errorHandler);
 //  server conncetion
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server sta rted on port ${PORT}`));
