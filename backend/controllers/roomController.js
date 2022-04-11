@@ -128,6 +128,81 @@ const getSingleRoom = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Delete Single Room
+//@route    DELETE /api/v1/rooms/:id
+//@access   Private
+const deleteRoom = asyncHandler(async (req, res) => {
+  //  check if request has id
+  if (!req.params.id) {
+    res.status(400).json({
+      status: false,
+      message: 'Invalid request.',
+    });
+  }
+  try {
+    const response = await db.rooms.destroy({
+      where: { roomid: req.params.id },
+    });
+    if (response) {
+      res.status(200).json({
+        status: true,
+        message: 'Room successfully deleted.',
+      });
+    } else {
+      res.status(400);
+      throw new Error('Invalid room id.');
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
+
+//@desc     Update Single Room
+//@route    PUT /api/v1/rooms/:id
+//@access   Private
+const updateRoom = asyncHandler(async (req, res) => {
+  // get room id
+  if (!req.params.id) {
+    res.status(400).json({
+      status: false,
+      message: 'Invalid request.',
+    });
+  }
+  try {
+    //  check if room id exist
+    const roomExist = await db.rooms.findOne({
+      where: { roomid: req.params.id },
+    });
+    if (!roomExist) {
+      res.status(400);
+      throw new Error('The requested room does not exist.');
+    }
+    if (Object.keys(req.body).length === 0) {
+      res.status(400);
+      throw new Error('Invalid request.');
+    }
+    //  update record
+    const response = await db.rooms.update(req.body, {
+      where: { roomid: req.params.id },
+    });
+    if (response) {
+      res.status(200).json({
+        status: true,
+        data: 'Room information updated successfully.',
+      });
+    } else {
+      res.status(400).json({
+        status: false,
+        message: "Error updating room's record.",
+      });
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
+
 //  upload multiple image function
 const cloudinaryImageUploadMethod = asyncHandler(async (file) => {
   return new Promise((resolve) => {
@@ -150,4 +225,6 @@ module.exports = {
   addRoom,
   getRooms,
   getSingleRoom,
+  deleteRoom,
+  updateRoom,
 };

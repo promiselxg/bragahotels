@@ -23,4 +23,6 @@ app.use('*', (req, res) =>
 //  custom error handler
 app.use(errorHandler);
 //  server conncetion
-app.listen(PORT, () => console.log(`Server sta rted on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Server started on port ${PORT}`.yellow.italic.bold)
+);
