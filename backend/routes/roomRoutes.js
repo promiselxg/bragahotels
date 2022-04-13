@@ -6,6 +6,7 @@ const {
   getSingleRoom,
   deleteRoom,
   updateRoom,
+  bookRoom,
 } = require('../controllers/roomController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const { queryFilter } = require('../middleware/queryMiddleware');
@@ -16,6 +17,7 @@ const router = express.Router();
 // Mount Routes
 router.route('/new').post(verifyToken, uploadFile.array('file'), addRoom);
 router.route('/').get(queryFilter(db.rooms), getRooms);
+router.route('/:id/:checkin/:checkout/book/').post(bookRoom);
 router
   .route('/:id')
   .get(getSingleRoom)

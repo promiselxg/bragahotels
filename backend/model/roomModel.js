@@ -70,6 +70,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       defaultValue: '',
     },
+    discount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
   });
 
   return Room;

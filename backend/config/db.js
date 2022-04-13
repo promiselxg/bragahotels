@@ -34,6 +34,18 @@ db.sequelize = sequelize;
 // create Table
 db.users = require('../model/userModel')(sequelize, DataTypes);
 db.rooms = require('../model/roomModel')(sequelize, DataTypes);
+db.reservation = require('../model/reservationModel')(sequelize, DataTypes);
+
+//  Table Relationships
+db.reservation.hasMany(db.rooms, {
+  foreignKey: 'roomid',
+  as: 'room',
+});
+
+db.rooms.belongsTo(db.reservation, {
+  foreignKey: 'roomid',
+  as: 'reservation ',
+});
 
 db.sequelize.sync({ force: false }).then(() => {});
 

@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const { cloudinary } = require('../utils/cloudinary');
 const { Op } = require('sequelize');
 const ROLES = require('../utils/roles');
+const moment = require('moment');
 const db = require('../config/db');
 const fs = require('fs');
 
@@ -203,6 +204,106 @@ const updateRoom = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Book A Room
+//@route    POST /api/v1/rooms/:id/book
+//@access   Public
+const bookRoom = asyncHandler(async (req, res) => {
+  //  get id
+  const { id } = req.params;
+  let { checkin, checkout } = req.params;
+
+  const data = {
+    userType: req.user ? 'user' : 'guest',
+    first_name: req.user ? req.user.firstname : req.body.first_name,
+    last_name: req.user ? req.user.lastname : req.body.last_name,
+    phone_number: req.user ? req.user.phoneNumber : req.body.phone_number,
+    email: req.user ? req.user.email : req.body.email,
+    special_request: req.body.special_request,
+  };
+
+  const {
+    userType,
+    first_name,
+    last_name,
+    phone_number,
+    email,
+    special_request,
+  } = data;
+
+  try {
+    if (!id) {
+      res.status(400).json({
+        status: false,
+        message: 'Invalid request.',
+      });
+    }
+    //   if user is a guest, check if the form is filled out
+    if (userType === 'guest') {
+      if (!first_name || !last_name || !phone_number || !email || !userType) {
+        console.log(req.user);
+      }
+      if (!isNaN(phone_number)) {
+        res.status(400);
+        throw new Error('Please enter a valid phone number.');
+      }
+    }
+    //  check DB to see if ID exist
+    const roomExist = await db.rooms.findOne({ where: { roomid: id } });
+    if (!roomExist) {
+      res.status(400);
+      throw new Error('Invalid request ID.');
+    }
+    //  check if room is available for booking
+    if (roomExist.qty < 1) {
+      res.status(400);
+      throw new Error('This room is no longer available for booking.');
+    }
+    //  get total number of days from date
+    checkin = moment(checkin, 'YYYY-MM-DD');
+    checkout = moment(checkout, 'YYYY-MM-DD');
+    const totalDays = moment.duration(checkout.diff(checkin)).asDays() + 1;
+    const totalAmount = totalDays * roomExist.price;
+    //  check if room is on discount and update price
+    //  prepare room reservation data
+    //  connect payment api
+
+    let newQty;
+    // newQty = roomExist.qty - 1;
+    // //  update current rooms availability
+    // const roomUpdate = await db.rooms.update(
+    //   { qty: newQty },
+    //   { where: { roomid: id } }
+    // );
+    //  insert record to reservations table
+    // if (roomUpdate) {
+    //   const response = await db.reservation.create(data);
+    // }
+    res.status(200).json({
+      status: true,
+      data: {
+        userType,
+        first_name,
+        last_name,
+        phone_number,
+        email,
+        special_request,
+        user: req.user,
+        reservation: {
+          checkin,
+          checkout,
+          totalDays,
+          totalAmount,
+          pricePerNight: roomExist.price,
+        },
+        roomExist,
+      },
+    });
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
+
 //  upload multiple image function
 const cloudinaryImageUploadMethod = asyncHandler(async (file) => {
   return new Promise((resolve) => {
@@ -227,4 +328,5 @@ module.exports = {
   getSingleRoom,
   deleteRoom,
   updateRoom,
+  bookRoom,
 };
