@@ -210,8 +210,7 @@ const updateRoom = asyncHandler(async (req, res) => {
 const bookRoom = asyncHandler(async (req, res) => {
   //  get id
   const { id } = req.params;
-  let { checkin, checkout } = req.params;
-
+  let transaction = true;
   const data = {
     userType: req.user ? 'user' : 'guest',
     first_name: req.user ? req.user.firstname : req.body.first_name,
@@ -219,6 +218,10 @@ const bookRoom = asyncHandler(async (req, res) => {
     phone_number: req.user ? req.user.phoneNumber : req.body.phone_number,
     email: req.user ? req.user.email : req.body.email,
     special_request: req.body.special_request,
+    checkin: req.body.checkIn,
+    checkout: req.body.checkOut,
+    totalDays: req.body.totalDays,
+    totalAmount: req.body.totalAmount,
   };
 
   const {
@@ -228,6 +231,10 @@ const bookRoom = asyncHandler(async (req, res) => {
     phone_number,
     email,
     special_request,
+    checkin,
+    checkout,
+    totalDays,
+    totalAmount,
   } = data;
 
   try {
@@ -237,12 +244,16 @@ const bookRoom = asyncHandler(async (req, res) => {
         message: 'Invalid request.',
       });
     }
+    if (!checkin || !checkout || !totalAmount || !totalDays) {
+      res.status(400);
+      throw new Error('Invalid request.');
+    }
     //   if user is a guest, check if the form is filled out
     if (userType === 'guest') {
       if (!first_name || !last_name || !phone_number || !email || !userType) {
         console.log(req.user);
       }
-      if (!isNaN(phone_number)) {
+      if (!parseInt(phone_number)) {
         res.status(400);
         throw new Error('Please enter a valid phone number.');
       }
@@ -254,50 +265,44 @@ const bookRoom = asyncHandler(async (req, res) => {
       throw new Error('Invalid request ID.');
     }
     //  check if room is available for booking
-    if (roomExist.qty < 1) {
+    if (roomExist?.qty < 1) {
       res.status(400);
       throw new Error('This room is no longer available for booking.');
     }
-    //  get total number of days from date
-    checkin = moment(checkin, 'YYYY-MM-DD');
-    checkout = moment(checkout, 'YYYY-MM-DD');
-    const totalDays = moment.duration(checkout.diff(checkin)).asDays() + 1;
-    const totalAmount = totalDays * roomExist.price;
-    //  check if room is on discount and update price
-    //  prepare room reservation data
-    //  connect payment api
-
     let newQty;
-    // newQty = roomExist.qty - 1;
-    // //  update current rooms availability
-    // const roomUpdate = await db.rooms.update(
-    //   { qty: newQty },
-    //   { where: { roomid: id } }
-    // );
-    //  insert record to reservations table
-    // if (roomUpdate) {
-    //   const response = await db.reservation.create(data);
-    // }
-    res.status(200).json({
-      status: true,
-      data: {
-        userType,
-        first_name,
-        last_name,
-        phone_number,
-        email,
-        special_request,
-        user: req.user,
-        reservation: {
-          checkin,
-          checkout,
-          totalDays,
-          totalAmount,
-          pricePerNight: roomExist.price,
-        },
-        roomExist,
-      },
-    });
+    newQty = roomExist.qty - 1;
+
+    //  connect payment api
+    try {
+      if (transaction) {
+        // insert record to reservations table
+        const response = await db.reservation.create({
+          userid: req.user ? req.user.id : 'guest',
+          roomid: id,
+          checkIn: checkin,
+          checkOut: checkout,
+          totalAmount: totalAmount,
+          totalDays: totalDays,
+          status: 'paid',
+          firstname: first_name,
+          lastname: last_name,
+          phoneNumber: phone_number,
+          email: email,
+          specialRequest: special_request,
+        });
+        if (response) {
+          //  update current rooms availability
+          await db.rooms.update({ qty: newQty }, { where: { roomid: id } });
+        }
+        res.status(201).json({
+          status: true,
+          message: 'room reservation successfull.',
+        });
+      }
+    } catch (error) {
+      res.status(400);
+      throw new Error(error);
+    }
   } catch (error) {
     res.status(400);
     throw new Error(error);
