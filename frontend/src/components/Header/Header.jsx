@@ -1,6 +1,6 @@
 import { Image, NavLink, Button } from '..';
 import { Logo } from '../../assets';
-import { Container, Typography } from '../../GlobalStyle';
+import { Container } from '../../GlobalStyle';
 import { HeaderContainer, HeaderWrapper, Nav, NavLogo } from './Header.style';
 
 const Header = () => {

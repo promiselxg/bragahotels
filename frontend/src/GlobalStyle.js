@@ -7,7 +7,9 @@ const GlobalStyle = createGlobalStyle`
   box-sizing:border-box;
   -webkit-tap-highlight-color:rgba(0,0,0,0) !important;
 }
-
+:root{
+  --yellow:#FBB51A;
+}
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -42,7 +44,7 @@ export const Typography = styled.h1`
   line-height: ${(props) => (props.lineHeight ? props.lineHeight : '')};
   font-style: ${(props) => (props.fontStyle ? props.fontStyle : 'normal')};
   margin: ${(props) => (props.margin ? props.margin : '')};
-  font-family: ${(props) => (props.heading ? 'Kinn' : 'Poppins')}; ;
+  color: ${(props) => (props.color ? props.color : '')};
 `;
 
 export default GlobalStyle;
