@@ -1,6 +1,4 @@
-import { Hero } from '../../assets';
 import { Container, Typography } from '../../GlobalStyle';
-import { Image } from '../index';
 import { Column, HeroSectionWrapper, SliderWrapper } from './HeroSection.style';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
