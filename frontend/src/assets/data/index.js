@@ -1,3 +1,4 @@
+import { FiTrash2 } from 'react-icons/fi';
 export const Rooms = [
   {
     title: 'Presidential Villa',
@@ -26,5 +27,32 @@ export const Rooms = [
     price: '18,300',
     discount: '20,000',
     percent: '',
+  },
+];
+
+export const Services = [
+  {
+    title: '24/7 Room service',
+    icon: <FiTrash2 />,
+    bg: '#BC009E33',
+    desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit autem sequi dicta sed nihil quaerat voluptatum vitae dolorum rerum neque quod porro minus fugit, quas qui enim exercitationem pariatur corporis.',
+  },
+  {
+    title: '24/7 Room service',
+    icon: <FiTrash2 />,
+    bg: '#2400FF',
+    desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit autem sequi dicta sed nihil quaerat voluptatum vitae dolorum rerum neque quod porro minus fugit, quas qui enim exercitationem pariatur corporis.',
+  },
+  {
+    title: '24/7 Room service',
+    icon: <FiTrash2 />,
+    bg: '#F45800',
+    desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit autem sequi dicta sed nihil quaerat voluptatum vitae dolorum rerum neque quod porro minus fugit, quas qui enim exercitationem pariatur corporis.',
+  },
+  {
+    title: '24/7 Room service',
+    icon: <FiTrash2 />,
+    bg: 'var(--yellow)',
+    desc: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sit autem sequi dicta sed nihil quaerat voluptatum vitae dolorum rerum neque quod porro minus fugit, quas qui enim exercitationem pariatur corporis.',
   },
 ];

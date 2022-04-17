@@ -1,3 +1,3 @@
 export { default as Logo } from './img/logo.png';
 export { default as Hero } from './img/banner.svg';
-export { Rooms } from './data';
+export { Rooms, Services as Service } from './data';

@@ -4,6 +4,7 @@ export { default as Section } from './Section';
 export { default as HeroSection } from './HeroSection/HeroSection';
 export { default as Category } from '../sections/RoomCategory';
 export { default as FeaturedRooms } from '../sections/Rooms';
+export { default as Services } from '../sections/Services';
 export { default as NavLink } from './NavAnchor';
 export { default as Header } from './Header/Header';
 export { default as Search } from './Search/Search';
