@@ -7,6 +7,9 @@ const GlobalStyle = createGlobalStyle`
   box-sizing:border-box;
   -webkit-tap-highlight-color:rgba(0,0,0,0) !important;
 }
+::-webkit-scrollbar {
+                display: none;
+            }
 :root{
   --yellow:#FBB51A;
 }

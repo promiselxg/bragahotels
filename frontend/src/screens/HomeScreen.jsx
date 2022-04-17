@@ -1,4 +1,4 @@
-import { HeroSection, Search } from '../components';
+import { Category, HeroSection, Search } from '../components';
 import AboutSection from '../sections/About/About';
 
 const HomeScreen = () => {
@@ -7,6 +7,7 @@ const HomeScreen = () => {
       <HeroSection />
       <Search />
       <AboutSection />
+      <Category />
     </>
   );
 };

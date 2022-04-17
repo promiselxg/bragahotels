@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Container, Typography } from '../../GlobalStyle';
+import { Section } from '../../components';
+import { Typography } from '../../GlobalStyle';
 
 const AboutSectionWrapper = styled.div`
   height: calc(80vh - 70px);
   display: flex;
   width: 100%;
-  padding-top: 30px;
   .container {
     width: 100%;
     text-align: center;
@@ -24,8 +24,8 @@ const AboutSectionWrapper = styled.div`
 const AboutSection = () => {
   return (
     <>
-      <AboutSectionWrapper>
-        <Container maxWidth="1000px">
+      <Section maxWidth="1000px">
+        <AboutSectionWrapper>
           <div className="container">
             <Typography as="h1" fontSize="3rem" fontWeight="800">
               About Braga Hotels.
@@ -43,8 +43,8 @@ const AboutSection = () => {
               aliquam veritatis iste obcaecati cumque!
             </Typography>
           </div>
-        </Container>
-      </AboutSectionWrapper>
+        </AboutSectionWrapper>
+      </Section>
     </>
   );
 };
