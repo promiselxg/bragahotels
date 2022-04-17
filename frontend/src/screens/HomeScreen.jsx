@@ -1,4 +1,4 @@
-import { Category, HeroSection, Search } from '../components';
+import { Category, FeaturedRooms, HeroSection, Search } from '../components';
 import AboutSection from '../sections/About/About';
 
 const HomeScreen = () => {
@@ -8,6 +8,7 @@ const HomeScreen = () => {
       <Search />
       <AboutSection />
       <Category />
+      <FeaturedRooms />
     </>
   );
 };
