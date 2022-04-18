@@ -1,6 +1,7 @@
-import { Image, NavLink, Button } from '..';
+import { Image, Button } from '..';
 import { Logo } from '../../assets';
 import { Container } from '../../GlobalStyle';
+import { Links } from '../NavAnchor';
 import { HeaderContainer, HeaderWrapper, Nav, NavLogo } from './Header.style';
 
 const Header = () => {
@@ -13,10 +14,10 @@ const Header = () => {
               <Image src={Logo} alt="logo" />
             </NavLogo>
             <Nav>
-              <NavLink url="/" label="Home" />
-              <NavLink url="/" label="About Us" />
-              <NavLink url="/" label="Rooms" />
-              <NavLink url="/" label="Contact Us" />
+              <Links url="/" label="Home" />
+              <Links url="/about" label="About Us" />
+              <Links url="/rooms" label="Rooms" />
+              <Links url="/contact" label="Contact Us" />
               <Button label="Booking" color="#000" bg="#FBB51A" />
             </Nav>
           </HeaderContainer>

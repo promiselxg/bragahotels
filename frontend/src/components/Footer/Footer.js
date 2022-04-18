@@ -2,7 +2,7 @@ import React from 'react';
 import { FiFacebook, FiInstagram, FiMail, FiTwitter } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Container, Typography } from '../../GlobalStyle';
-import NavLink from '../NavAnchor';
+import { NavLink } from '../NavAnchor';
 
 import {
   FooterItem,

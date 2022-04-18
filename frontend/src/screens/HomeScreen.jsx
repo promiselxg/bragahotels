@@ -4,15 +4,15 @@ import {
   HeroSection,
   Search,
   Services,
+  About,
 } from '../components';
-import AboutSection from '../sections/About/About';
 
 const HomeScreen = () => {
   return (
     <>
       <HeroSection />
       <Search />
-      <AboutSection />
+      <About />
       <Category />
       <FeaturedRooms />
       <Services />

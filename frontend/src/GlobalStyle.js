@@ -13,11 +13,15 @@ const GlobalStyle = createGlobalStyle`
 :root{
   --yellow:#FBB51A;
 }
+.ant-picker-suffix{
+  display:none
+}
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   font-size:16px;
   transition: all 0.5s ease;
+
 }
 a{
   text-decoration: none;
