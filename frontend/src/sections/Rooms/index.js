@@ -99,7 +99,7 @@ const RoomsSection = () => {
 
                 <CardBody>
                   <CardTitle>
-                    <Link to={`/rooms/${i}`}>
+                    <Link to={`/room/${i}`}>
                       <Typography as="h2" fontSize="1rem" fontWeight="800">
                         {room.title}
                       </Typography>

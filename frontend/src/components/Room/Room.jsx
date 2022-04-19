@@ -4,6 +4,7 @@ import { Room, RoomImage, RoomInfo } from './Room.style';
 import { Image, Rate } from 'antd';
 import { Button } from '../../components';
 import { FiCheck } from 'react-icons/fi';
+import { Links } from '../NavAnchor';
 
 const RoomList = () => {
   const [visible, setVisible] = useState(false);
@@ -29,7 +30,7 @@ const RoomList = () => {
         <RoomInfo>
           <div className="roomName">
             <Typography as="h2" fontSize="2rem" fontWeight="800">
-              Presidential Lounge
+              <Links url={`/room/1`} label="Presidential Lounge" />
             </Typography>
             <Rate disabled defaultValue={2} />
           </div>

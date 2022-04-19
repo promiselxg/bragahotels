@@ -23,6 +23,9 @@ body {
   transition: all 0.5s ease;
 
 }
+h2{
+  font-family:'Kinn' ;
+}
 a{
   text-decoration: none;
 }
