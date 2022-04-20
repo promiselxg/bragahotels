@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const HeaderWrapper = styled.header`
   height: 60px;
   width: 100%;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 `;
 export const HeaderContainer = styled.div`
   display: flex;

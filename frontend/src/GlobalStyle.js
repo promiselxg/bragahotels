@@ -11,7 +11,8 @@ const GlobalStyle = createGlobalStyle`
                 display: none;
             }
 :root{
-  --yellow:#FBB51A;
+  --yellow:#febb02;
+  --blue:#0071c2;
 }
 .ant-picker-suffix{
   display:none
@@ -21,7 +22,7 @@ body {
   font-family: 'Poppins', sans-serif;
   font-size:16px;
   transition: all 0.5s ease;
-
+  
 }
 h2{
   font-family:'Kinn' ;
