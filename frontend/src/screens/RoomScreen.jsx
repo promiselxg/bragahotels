@@ -1,4 +1,5 @@
 import { Room, Section, SideBar } from '../components';
+import { useSelector } from 'react-redux';
 import { Breadcrumb } from 'antd';
 import {
   FilterBox,
@@ -11,6 +12,7 @@ import {
 import { Links } from '../components/NavAnchor';
 import { Typography } from '../GlobalStyle';
 const RoomScreen = () => {
+  const { rooms } = useSelector((state) => state.listRooms);
   return (
     <>
       <Section>
@@ -31,7 +33,7 @@ const RoomScreen = () => {
               <RightWrapper>
                 <div className="heading">
                   <Typography as="h2" fontSize="1.2rem" fontWeight="600">
-                    200 rooms found
+                    {rooms.count} rooms found
                   </Typography>
                   <div className="sort">
                     <div className="link">

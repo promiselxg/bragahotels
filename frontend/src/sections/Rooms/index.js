@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../../components';
 import { FiStar } from 'react-icons/fi';
-
+import { useSelector } from 'react-redux';
 import { Container, Typography } from '../../GlobalStyle';
-import { Rooms } from '../../assets';
+import NumberFormat from 'react-number-format';
 const Wrapper = styled.div`
   width: 100%;
   text-align: center;
@@ -76,6 +76,7 @@ const CardInfo = styled.div`
   }
 `;
 const RoomsSection = () => {
+  const { rooms } = useSelector((state) => state.listRooms);
   return (
     <>
       <Container maxWidth="1000px">
@@ -93,13 +94,15 @@ const RoomsSection = () => {
         <Bg></Bg>
         <Container>
           <SectionContainer>
-            {Rooms.map((room, i) => (
+            {rooms.data.map((room, i) => (
               <RoomCard key={i}>
-                <CardHeading bg={room.img}></CardHeading>
+                <Link to={`/room/${room.roomid}`}>
+                  <CardHeading bg={room.thumbnail}></CardHeading>
+                </Link>
 
                 <CardBody>
                   <CardTitle>
-                    <Link to={`/room/${i}`}>
+                    <Link to={`/room/${room.roomid}`}>
                       <Typography as="h2" fontSize="1rem" fontWeight="800">
                         {room.title}
                       </Typography>
@@ -117,7 +120,13 @@ const RoomsSection = () => {
                             fontSize="1.3rem"
                             fontWeight="600"
                           >
-                            &#8358;{room.price}/night
+                            &#8358;
+                            <NumberFormat
+                              displayType={'text'}
+                              value={room.price}
+                              thousandSeparator={true}
+                            />
+                            /night
                           </Typography>
                         </div>
                       </>
@@ -135,13 +144,15 @@ const RoomsSection = () => {
 
                         <div className="discount">
                           <Typography as="h2" fontSize=".8rem" fontWeight="600">
-                            <s>&#8358;{room.discount}</s> - 10% off
+                            <s>&#8358;{room.discount}</s> - {room.discount}% off
                           </Typography>
                         </div>
                       </>
                     )}
 
-                    <Button label="Book Now" bg="var(--yellow)" />
+                    <Link to={`/room/${room.roomid}`}>
+                      <Button label="Book Now" bg="var(--yellow)" />
+                    </Link>
                   </CardInfo>
                 </CardBody>
               </RoomCard>

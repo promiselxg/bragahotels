@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Image, Button } from '..';
 import { Logo } from '../../assets';
 import { Container } from '../../GlobalStyle';
@@ -11,7 +12,9 @@ const Header = () => {
         <Container>
           <HeaderContainer>
             <NavLogo>
-              <Image src={Logo} alt="logo" />
+              <Link to="/">
+                <Image src={Logo} alt="logo" />
+              </Link>
             </NavLogo>
             <Nav>
               <Links url="/" label="Home" />
