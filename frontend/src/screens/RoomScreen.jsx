@@ -19,8 +19,14 @@ const RoomScreen = () => {
         <RoomContainer>
           <RoomHeader>
             <Breadcrumb>
-              <Breadcrumb.Item>
+              <Breadcrumb.Item className="seperator">
                 <Links to="/" label="Home" />
+              </Breadcrumb.Item>
+              <Breadcrumb.Item className="seperator">
+                <Links to="/rooms" label="Rooms" />
+              </Breadcrumb.Item>
+              <Breadcrumb.Item className="seperator">
+                <i>Available rooms</i>
               </Breadcrumb.Item>
             </Breadcrumb>
           </RoomHeader>
@@ -42,7 +48,13 @@ const RoomScreen = () => {
                       <Links to="/" label="Our top picks" />
                     </div>
                     <div className="link">
-                      <Links to="/" label="Our top picks" />
+                      <Links to="/" label="Homes &amp; apartments first" />
+                    </div>
+                    <div className="link">
+                      <Links to="/" label="Stars (highest first)" />
+                    </div>
+                    <div className="link">
+                      <Links to="/" label="Stars (lowest first)" />
                     </div>
                   </div>
                 </div>

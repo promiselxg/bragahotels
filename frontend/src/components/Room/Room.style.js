@@ -9,7 +9,28 @@ export const RoomHeader = styled.div`
   height: 40px;
   align-items: center;
   display: flex;
-  margin: 20px 0;
+  margin: 10px 0;
+  .ant-breadcrumb {
+    display: flex;
+
+    .seperator {
+      display: inline-flex;
+      font-size: 12px;
+      i {
+        margin-left: 3px;
+        font-size: 12px;
+      }
+    }
+    .ant-breadcrumb-separator {
+      margin: 0px;
+      color: rgba(0, 0, 0, 0.2);
+      font-size: 12px;
+    }
+  }
+  a {
+    color: var(--blue) !important;
+    font-size: 12px;
+  }
 `;
 export const RoomContent = styled.div`
   width: 100%;
@@ -24,7 +45,7 @@ export const LeftWrapper = styled.aside`
   flex: 0.2;
   width: 100%;
   height: 330px;
-  background: var(--yellow);
+  background: #e8f3ff;
   border: 1px solid transparent;
   border-radius: 5px;
   color: #333;

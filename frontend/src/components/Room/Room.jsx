@@ -40,6 +40,11 @@ const Room = () => {
                   <div className="room__details">
                     <Typography as="p" fontSize="0.8rem">
                       {room.description}
+                      {room.description}
+                      {room.description}
+                      {room.description}
+                      {room.description}
+                      {room.description}
                     </Typography>
                     <div className="room__features">
                       {room.roomFeatures.split(',').map((item, i) => (
