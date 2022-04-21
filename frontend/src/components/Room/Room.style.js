@@ -91,7 +91,7 @@ export const SearchBox = styled.div`
     }
   }
 `;
-export const FilterBox = styled.div``;
+
 export const RightWrapper = styled.div`
   width: 100%;
   flex: 1;

@@ -9,7 +9,7 @@ const queryFilter = (model) => async (req, res, next) => {
 
     //  Finding Resource
     if (Object.keys(req.query).length === 0) {
-      query = model.findAll();
+      query = model.findAll({ order: [['updatedAt', 'DESC']] });
     } else {
       query = model.findAll({
         where: {
@@ -27,7 +27,6 @@ const queryFilter = (model) => async (req, res, next) => {
     }
     //    send response back
     res.queryResults = {
-      success: true,
       count: result.length,
       data: result,
     };
@@ -36,7 +35,7 @@ const queryFilter = (model) => async (req, res, next) => {
   } catch (error) {
     res.status(400).json({
       status: false,
-      message: error,
+      message: 'Invalid Request',
     });
   }
 };

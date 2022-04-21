@@ -1,14 +1,14 @@
-import { Room, Section, SideBar } from '../components';
+import { Room, Section, SideBar, Filter } from '../components';
 import { useSelector } from 'react-redux';
 import { Breadcrumb } from 'antd';
 import {
-  FilterBox,
   LeftWrapper,
   RightWrapper,
   RoomContainer,
   RoomContent,
   RoomHeader,
 } from '../components/Room/Room.style';
+import { FilterBox } from '../components/Search/Filter.style.js';
 import { Links } from '../components/NavAnchor';
 import { Typography } from '../GlobalStyle';
 const RoomScreen = () => {
@@ -28,7 +28,9 @@ const RoomScreen = () => {
             <div className="container">
               <LeftWrapper>
                 <SideBar />
-                <FilterBox></FilterBox>
+                <FilterBox>
+                  <Filter />
+                </FilterBox>
               </LeftWrapper>
               <RightWrapper>
                 <div className="heading">
