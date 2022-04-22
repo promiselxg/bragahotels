@@ -12,8 +12,14 @@ const getAllRooms = async () => {
   return response.data;
 };
 
+//  Get single room details
+const getRoomDetails = async (roomid) => {
+  const response = await axios.get(`${API_URL}/${roomid}`);
+  return response.data;
+};
 const roomService = {
   getAllRooms,
+  getRoomDetails,
 };
 
 export default roomService;

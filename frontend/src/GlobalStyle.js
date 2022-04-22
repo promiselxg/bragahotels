@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
 :root{
   --yellow:#febb02;
   --blue:#0071c2;
+  --light-blue:#ebf3ff;
 }
 .ant-picker-suffix{
   display:none

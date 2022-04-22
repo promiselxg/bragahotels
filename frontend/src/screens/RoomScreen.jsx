@@ -41,7 +41,7 @@ const RoomScreen = () => {
               <RightWrapper>
                 <div className="heading">
                   <Typography as="h2" fontSize="1.2rem" fontWeight="600">
-                    {rooms.count} rooms found
+                    {rooms?.count} {rooms?.count > 1 ? 'rooms' : 'room'} found
                   </Typography>
                   <div className="sort">
                     <div className="link">

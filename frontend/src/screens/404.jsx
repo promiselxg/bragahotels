@@ -1,9 +1,23 @@
 import React from 'react';
+import { Section } from '../components';
+import { Empty } from 'antd';
+import styled from 'styled-components';
 
-const PageNotFound = () => {
+const EmptyWrapper = styled.div`
+  padding: 20vh 0;
+`;
+const PageNotFound = ({ message }) => {
   return (
     <>
-      <h1>Page not found</h1>
+      <Section>
+        <EmptyWrapper>
+          {message ? (
+            <Empty description={message} />
+          ) : (
+            <Empty description="The requested resource was not found." />
+          )}
+        </EmptyWrapper>
+      </Section>
     </>
   );
 };
