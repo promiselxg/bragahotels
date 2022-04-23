@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { Breadcrumb, Image, Rate, Skeleton } from 'antd';
-import { Button, Section, SideBar } from '../components';
+import { Button, Section, SideBar, Image as Img } from '../components';
 import { Links } from '../components/NavAnchor';
 import { Typography } from '../GlobalStyle';
 import {
@@ -22,6 +23,7 @@ import PageNotFound from './404';
 
 const RoomInfoScreen = () => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const [visible, setVisible] = useState(false);
   const { id } = useParams();
   const { room, isLoading, isError, message } = useSelector(
@@ -31,7 +33,7 @@ const RoomInfoScreen = () => {
     dispatch(getSingleRoom(id));
 
     window.scrollTo(0, 0);
-  }, [dispatch, id]);
+  }, [dispatch, id, pathname]);
   return (
     <>
       <Section>
@@ -92,7 +94,7 @@ const RoomInfoScreen = () => {
                         <div className="container">
                           <div className="left__image">
                             <ImageWrapper>
-                              <Image
+                              <Img
                                 src={
                                   room?.data?.otherImg
                                     .replace(/[[\]"]+/g, '')
@@ -103,7 +105,7 @@ const RoomInfoScreen = () => {
                               />
                             </ImageWrapper>
                             <ImageWrapper>
-                              <Image
+                              <Img
                                 src={
                                   room?.data?.otherImg
                                     .replace(/[[\]"]+/g, '')
@@ -117,7 +119,7 @@ const RoomInfoScreen = () => {
                           <div className="center__image">
                             <ImageWrapper>
                               {' '}
-                              <Image
+                              <Img
                                 preview={{ visible: false }}
                                 onClick={() => setVisible(true)}
                                 src={room?.data?.thumbnail}

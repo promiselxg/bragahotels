@@ -1,20 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import roomService from './roomService';
 
+const searchData = JSON.parse(localStorage.getItem('search'));
 const initialState = {
-  room: null,
+  result: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: '',
+  checkIn: '',
+  checkOut: '',
 };
 
 // get single rooms
-export const getSingleRoom = createAsyncThunk(
-  'rooms/roomDetails',
-  async (roomid, thunkAPI) => {
+export const searchRooms = createAsyncThunk(
+  'rooms/search',
+  async (data, thunkAPI) => {
     try {
-      return await roomService.getRoomDetails(roomid);
+      return await roomService.searchRoom(data);
     } catch (error) {
       const message =
         (error.response &&
@@ -27,8 +30,8 @@ export const getSingleRoom = createAsyncThunk(
   }
 );
 
-export const singleRoomSlice = createSlice({
-  name: 'room',
+export const roomSearch = createSlice({
+  name: 'search',
   initialState,
   reducers: {
     reset: (state) => {
@@ -39,21 +42,23 @@ export const singleRoomSlice = createSlice({
     },
   },
   extraReducers: {
-    [getSingleRoom.pending]: (state) => {
+    [searchRooms.pending]: (state) => {
       state.isLoading = true;
     },
-    [getSingleRoom.fulfilled]: (state, action) => {
+    [searchRooms.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.room = action.payload;
+      state.result = action.payload;
+      state.checkIn = searchData.checkIn;
+      state.checkOut = searchData.checkOut;
     },
-    [getSingleRoom.rejected]: (state, action) => {
+    [searchRooms.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.payload;
-      state.room = null;
+      state.result = null;
     },
   },
 });
-export const { reset } = singleRoomSlice.actions;
-export default singleRoomSlice.reducer;
+export const { reset } = roomSearch.actions;
+export default roomSearch.reducer;
