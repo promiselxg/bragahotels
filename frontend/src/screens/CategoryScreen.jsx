@@ -31,6 +31,7 @@ const CategoryScreen = () => {
   useEffect(() => {
     dispatch(getRoomByCategory(params));
     dispatch(setSuccess());
+    window.scrollTo(0, 0);
   }, [dispatch, params]);
 
   return (

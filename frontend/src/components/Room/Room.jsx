@@ -26,16 +26,15 @@ const Room = () => {
                 <div className="room__center">
                   <div className="room__title">
                     <Typography as="h2" fontSize="1.2rem" fontWeight="600">
-                      <Links to={`/room/${room.roomid}`} label={room.title} />
+                      <Links
+                        to={`/room/${room.roomid}`}
+                        label={room.title}
+                        style={{ textTransform: 'capitalize' }}
+                      />
                     </Typography>
                   </div>
                   <div className="room__details">
                     <Typography as="p" fontSize="0.8rem">
-                      {room.description}
-                      {room.description}
-                      {room.description}
-                      {room.description}
-                      {room.description}
                       {room.description}
                     </Typography>
                     <div className="room__features">
@@ -44,7 +43,12 @@ const Room = () => {
                           <span className="icon">
                             <FiCheckCircle />
                           </span>
-                          <span className="name">{item}</span>
+                          <span
+                            className="name"
+                            style={{ textTransform: 'capitalize' }}
+                          >
+                            {item}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -60,7 +64,13 @@ const Room = () => {
                     <div className="rating__count">6.5</div>
                   </div>
                   <Link to={`/rooms/${room.roomid}/book`}>
-                    <Button bg="var(--blue)" color="#fff" label="Book Room" />
+                    <Button
+                      bg="var(--blue)"
+                      color="#fff"
+                      label="Book Room"
+                      hoverBg="var(--yellow)"
+                      hoverColor="#000"
+                    />
                   </Link>
                 </div>
               </div>

@@ -178,7 +178,12 @@ const RoomsSection = () => {
                         )}
 
                         <Link to={`/room/${room.roomid}`}>
-                          <Button label="Book Now" bg="var(--yellow)" />
+                          <Button
+                            label="Book Now"
+                            bg="var(--yellow)"
+                            hoverBg="#000"
+                            hoverColor="#fff"
+                          />
                         </Link>
                       </CardInfo>
                     </CardBody>

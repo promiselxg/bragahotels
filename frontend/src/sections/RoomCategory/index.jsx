@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, Section } from '../../components';
 import styled from 'styled-components';
 import { Typography } from '../../GlobalStyle';
+import { Link } from 'react-router-dom';
 
 const CategoryWrapper = styled.div`
   height: 100%;
@@ -55,24 +56,30 @@ const Category = () => {
             </Typography>
           </div>
           <div className="card">
-            <Card>
-              <Image
-                img="https://images.unsplash.com/photo-1650173419393-a3d85d494399?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                alt="image"
-              />
-            </Card>
-            <Card>
-              <Image
-                img="https://images.unsplash.com/photo-1650173419393-a3d85d494399?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                alt="image"
-              />
-            </Card>
-            <Card>
-              <Image
-                img="https://images.unsplash.com/photo-1650173419393-a3d85d494399?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
-                alt="image"
-              />
-            </Card>
+            <Link to="/rooms/delux">
+              <Card>
+                <Image
+                  img="https://images.unsplash.com/photo-1650173419393-a3d85d494399?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                  alt="image"
+                />
+              </Card>
+            </Link>
+            <Link to="/rooms/executive">
+              <Card>
+                <Image
+                  img="https://images.unsplash.com/photo-1650173419393-a3d85d494399?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                  alt="image"
+                />
+              </Card>
+            </Link>
+            <Link to="/rooms/presidential">
+              <Card>
+                <Image
+                  img="https://images.unsplash.com/photo-1650173419393-a3d85d494399?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                  alt="image"
+                />
+              </Card>
+            </Link>
           </div>
         </CategoryWrapper>
       </Section>
