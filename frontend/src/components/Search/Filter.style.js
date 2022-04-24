@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const FilterBox = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-bottom: none;
-  margin-top: 20px;
+  margin-top: 40px;
   border-radius: 5px 5px 0 0;
   width: 100%;
 `;

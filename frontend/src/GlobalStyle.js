@@ -7,9 +7,9 @@ const GlobalStyle = createGlobalStyle`
   box-sizing:border-box;
   -webkit-tap-highlight-color:rgba(0,0,0,0) !important;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
                 display: none;
-            }
+            } */
 :root{
   --yellow:#febb02;
   --blue:#0071c2;
@@ -36,7 +36,6 @@ h1{
 }
 button:disabled,
   button[disabled] {
-    background-color: #000;
     cursor: not-allowed;
 }
 `;

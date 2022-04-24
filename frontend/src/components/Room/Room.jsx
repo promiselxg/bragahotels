@@ -1,28 +1,20 @@
-import React, { useEffect } from 'react';
-
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FiCheckCircle } from 'react-icons/fi';
 import { Typography } from '../../GlobalStyle';
 import { Button, Image } from '../index';
 import { Links } from '../NavAnchor';
 import { RoomWrapper } from './Room.style';
-import { getRooms } from '../../redux/room/roomSlice';
 import { Link } from 'react-router-dom';
 import { Skeleton } from 'antd';
 
 const Room = () => {
-  const dispatch = useDispatch();
   const { rooms, isLoading } = useSelector((state) => state.listRooms);
-  useEffect(() => {
-    dispatch(getRooms());
-  }, [dispatch]);
-
   return (
     <>
       {isLoading ? (
         <Skeleton />
       ) : (
-        rooms.data.map((room, i) => (
+        rooms?.data.map((room, i) => (
           <div className="room" key={i}>
             <RoomWrapper>
               <div className="container">

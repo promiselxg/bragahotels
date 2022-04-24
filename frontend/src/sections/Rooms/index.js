@@ -6,6 +6,7 @@ import { FiStar } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { Container, Typography } from '../../GlobalStyle';
 import NumberFormat from 'react-number-format';
+import { Skeleton } from 'antd';
 const Wrapper = styled.div`
   width: 100%;
   text-align: center;
@@ -41,7 +42,6 @@ const SectionContainer = styled.div`
   top: 0;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
   gap: 10px;
 `;
 const RoomCard = styled.div`
@@ -76,7 +76,7 @@ const CardInfo = styled.div`
   }
 `;
 const RoomsSection = () => {
-  const { rooms } = useSelector((state) => state.listRooms);
+  const { rooms, isLoading } = useSelector((state) => state.listRooms);
   return (
     <>
       <Container maxWidth="1000px">
@@ -94,69 +94,80 @@ const RoomsSection = () => {
         <Bg></Bg>
         <Container>
           <SectionContainer>
-            {rooms.data.map((room, i) => (
-              <RoomCard key={i}>
-                <Link to={`/room/${room.roomid}`}>
-                  <CardHeading bg={room.thumbnail}></CardHeading>
-                </Link>
-
-                <CardBody>
-                  <CardTitle>
+            {isLoading ? (
+              <Skeleton />
+            ) : (
+              <>
+                {rooms?.data?.map((room, i) => (
+                  <RoomCard key={i}>
                     <Link to={`/room/${room.roomid}`}>
-                      <Typography as="h2" fontSize="1rem" fontWeight="800">
-                        {room.title}
-                      </Typography>
-                      <FiStar />
-                      <FiStar />
+                      <CardHeading bg={room.thumbnail}></CardHeading>
                     </Link>
-                  </CardTitle>
 
-                  <CardInfo>
-                    {!room.discount ? (
-                      <>
-                        <div className="price">
-                          <Typography
-                            as="h2"
-                            fontSize="1.3rem"
-                            fontWeight="600"
-                          >
-                            &#8358;
-                            <NumberFormat
-                              displayType={'text'}
-                              value={room.price}
-                              thousandSeparator={true}
-                            />
-                            /night
+                    <CardBody>
+                      <CardTitle>
+                        <Link to={`/room/${room?.roomid}`}>
+                          <Typography as="h2" fontSize="1rem" fontWeight="800">
+                            {room.title}
                           </Typography>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="price">
-                          <Typography
-                            as="h2"
-                            fontSize="1.3rem"
-                            fontWeight="600"
-                          >
-                            &#8358;{room.price}/night
-                          </Typography>
-                        </div>
+                          <FiStar />
+                          <FiStar />
+                        </Link>
+                      </CardTitle>
 
-                        <div className="discount">
-                          <Typography as="h2" fontSize=".8rem" fontWeight="600">
-                            <s>&#8358;{room.discount}</s> - {room.discount}% off
-                          </Typography>
-                        </div>
-                      </>
-                    )}
+                      <CardInfo>
+                        {!room.discount ? (
+                          <>
+                            <div className="price">
+                              <Typography
+                                as="h2"
+                                fontSize="1.3rem"
+                                fontWeight="600"
+                              >
+                                &#8358;
+                                <NumberFormat
+                                  displayType={'text'}
+                                  value={room.price}
+                                  thousandSeparator={true}
+                                />
+                                /night
+                              </Typography>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="price">
+                              <Typography
+                                as="h2"
+                                fontSize="1.3rem"
+                                fontWeight="600"
+                              >
+                                &#8358;{room.price}/night
+                              </Typography>
+                            </div>
 
-                    <Link to={`/room/${room.roomid}`}>
-                      <Button label="Book Now" bg="var(--yellow)" />
-                    </Link>
-                  </CardInfo>
-                </CardBody>
-              </RoomCard>
-            ))}
+                            <div className="discount">
+                              <Typography
+                                as="h2"
+                                fontSize=".8rem"
+                                fontWeight="600"
+                              >
+                                <s>&#8358;{room.discount}</s> - {room.discount}%
+                                off
+                              </Typography>
+                            </div>
+                          </>
+                        )}
+
+                        <Link to={`/room/${room.roomid}`}>
+                          <Button label="Book Now" bg="var(--yellow)" />
+                        </Link>
+                      </CardInfo>
+                    </CardBody>
+                  </RoomCard>
+                ))}
+              </>
+            )}
           </SectionContainer>
         </Container>
       </SectionWrapper>

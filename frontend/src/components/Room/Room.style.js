@@ -42,15 +42,20 @@ export const RoomContent = styled.div`
 `;
 
 export const LeftWrapper = styled.aside`
-  flex: 0.2;
+  flex: 0.3;
   width: 100%;
-  height: 330px;
-  background: #e8f3ff;
   border: 1px solid transparent;
   border-radius: 5px;
   color: #333;
   font-size: 14px;
   line-height: 20px;
+
+  .filterBox {
+    background: var(--yellow);
+    border-radius: 5px;
+    margin-top: 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
 `;
 
 export const SearchBox = styled.div`
@@ -82,7 +87,6 @@ export const SearchBox = styled.div`
         .ant-picker {
           width: 100%;
           padding: 8px;
-          border: none;
         }
       }
       .selectField {
@@ -92,19 +96,18 @@ export const SearchBox = styled.div`
         gap: 5px;
         .select {
           width: 100%;
-          margin-top: 10px;
+          span {
+            font-size: 0.8rem;
+            margin-left: 3px;
+          }
           .ant-select {
             width: 100%;
-            .ant-select-selector {
-              padding: 15px;
-              border: none;
-            }
           }
         }
       }
       button {
         width: 100%;
-        margin: 10px 0;
+        margin: 15px 0;
         padding: 15px;
         font-size: 1rem;
         font-weight: 400;

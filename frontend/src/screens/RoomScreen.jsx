@@ -1,5 +1,6 @@
 import { Room, Section, SideBar, Filter } from '../components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import {
   LeftWrapper,
@@ -11,8 +12,29 @@ import {
 import { FilterBox } from '../components/Search/Filter.style.js';
 import { Links } from '../components/NavAnchor';
 import { Typography } from '../GlobalStyle';
+import { useEffect } from 'react';
+import { getRooms } from '../redux/room/roomSlice';
+
 const RoomScreen = () => {
+  const dispatch = useDispatch();
+  const search = useLocation().search;
   const { rooms } = useSelector((state) => state.listRooms);
+
+  useEffect(() => {
+    if (search === '') {
+      dispatch(getRooms('all'));
+    } else {
+      const query = new URLSearchParams(search);
+      const data = {
+        checkIn: query.get('checkIn'),
+        checkOut: query.get('checkOut'),
+        adult: query.get('adult'),
+        kids: query.get('kids'),
+      };
+      dispatch(getRooms(data));
+    }
+  }, [dispatch, search]);
+
   return (
     <>
       <Section>
@@ -33,7 +55,9 @@ const RoomScreen = () => {
           <RoomContent>
             <div className="container">
               <LeftWrapper>
-                <SideBar />
+                <FilterBox className="filterBox">
+                  <SideBar />
+                </FilterBox>
                 <FilterBox>
                   <Filter />
                 </FilterBox>

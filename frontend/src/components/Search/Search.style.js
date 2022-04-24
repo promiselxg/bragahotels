@@ -23,6 +23,16 @@ export const SelectBox = styled.div`
   .dateWrapper {
     width: 100%;
   }
+  .span {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #ccc;
+  }
+  span {
+    color: #ccc;
+  }
   .ant-picker {
     width: 100%;
     border: none;
