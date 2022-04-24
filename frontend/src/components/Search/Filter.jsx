@@ -3,7 +3,6 @@ import { FilterWrapper } from '../../styles/Filter.style';
 import { Checkbox } from 'antd';
 import { Typography } from '../../GlobalStyle.js';
 import { useDispatch } from 'react-redux';
-import { getRoomByCategory } from '../../redux/room/roomCategorySlice';
 import { filterRooms } from '../../redux/room/roomSlice';
 
 const Filter = () => {
@@ -14,7 +13,7 @@ const Filter = () => {
       const queryStr = {
         category: data,
       };
-      dispatch(getRoomByCategory(queryStr));
+      dispatch(filterRooms(queryStr));
     }
   };
   const handlefilterBedSize = (e) => {
@@ -72,7 +71,7 @@ const Filter = () => {
               </Checkbox>
             </div>
           </div>
-          <div className="filter">
+          {/* <div className="filter">
             <Typography as="h3" fontSize="1rem" fontWeight="600">
               Star rating
             </Typography>
@@ -91,7 +90,7 @@ const Filter = () => {
             <div className="filter__items">
               <Checkbox>5 star</Checkbox>
             </div>
-          </div>
+          </div> */}
         </div>
       </FilterWrapper>
     </>

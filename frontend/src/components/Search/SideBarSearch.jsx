@@ -127,6 +127,8 @@ const SideBarSearch = () => {
               label="Search"
               onClick={handleSearch}
               disabled={!checkin || !checkout || error || isLoading}
+              hoverBg="#000"
+              hoverColor="#fff"
             />
           </div>
         </div>

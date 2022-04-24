@@ -107,7 +107,12 @@ const RoomsSection = () => {
                     <CardBody>
                       <CardTitle>
                         <Link to={`/room/${room?.roomid}`}>
-                          <Typography as="h2" fontSize="1rem" fontWeight="800">
+                          <Typography
+                            as="h2"
+                            fontSize="1rem"
+                            fontWeight="600"
+                            style={{ textTransform: 'capitalize' }}
+                          >
                             {room.title}
                           </Typography>
                           <FiStar />
@@ -121,7 +126,7 @@ const RoomsSection = () => {
                             <div className="price">
                               <Typography
                                 as="h2"
-                                fontSize="1.3rem"
+                                fontSize="1rem"
                                 fontWeight="600"
                               >
                                 &#8358;
@@ -139,10 +144,16 @@ const RoomsSection = () => {
                             <div className="price">
                               <Typography
                                 as="h2"
-                                fontSize="1.3rem"
+                                fontSize="1rem"
                                 fontWeight="600"
                               >
-                                &#8358;{room.price}/night
+                                &#8358;
+                                <NumberFormat
+                                  displayType={'text'}
+                                  value={room.price}
+                                  thousandSeparator={true}
+                                />
+                                /night
                               </Typography>
                             </div>
 
@@ -150,10 +161,17 @@ const RoomsSection = () => {
                               <Typography
                                 as="h2"
                                 fontSize=".8rem"
-                                fontWeight="600"
+                                fontWeight="400"
                               >
-                                <s>&#8358;{room.discount}</s> - {room.discount}%
-                                off
+                                <s>
+                                  &#8358;
+                                  <NumberFormat
+                                    displayType={'text'}
+                                    value={room.discount}
+                                    thousandSeparator={true}
+                                  />
+                                </s>{' '}
+                                - {room.discount}% off
                               </Typography>
                             </div>
                           </>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const FilterBox = styled.div`
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: none;
   margin-top: 40px;
   border-radius: 5px 5px 0 0;
@@ -14,12 +14,12 @@ export const FilterWrapper = styled.div`
     display: flex;
     flex-direction: column;
     .header__title {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       width: 100%;
       padding: 15px 20px;
     }
     .filter {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       width: 100%;
       padding: 15px 20px;
       min-height: 100px;

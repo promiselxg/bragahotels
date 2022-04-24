@@ -59,12 +59,8 @@ const Room = () => {
                     </div>
                     <div className="rating__count">6.5</div>
                   </div>
-                  <Link to={`/room/${room.roomid}/reserve`}>
-                    <Button
-                      bg="var(--blue)"
-                      color="#fff"
-                      label="Reserve Room"
-                    />
+                  <Link to={`/rooms/${room.roomid}/book`}>
+                    <Button bg="var(--blue)" color="#fff" label="Book Room" />
                   </Link>
                 </div>
               </div>

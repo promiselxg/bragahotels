@@ -1,8 +1,10 @@
-import { Breadcrumb, Skeleton } from 'antd';
+import { Breadcrumb, Rate, Skeleton } from 'antd';
 import React, { useEffect } from 'react';
+import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { Filter, Section, SideBar } from '../components';
+import { Link } from 'react-router-dom';
+import { Button, Filter, Image, Section, SideBar } from '../components';
 import { Links } from '../components/NavAnchor';
 import {
   LeftWrapper,
@@ -14,6 +16,12 @@ import {
 import { Typography } from '../GlobalStyle';
 import { getRoomByCategory } from '../redux/room/roomCategorySlice';
 import { setSuccess } from '../redux/room/roomSlice';
+import {
+  RoomCard,
+  RoomCardBody,
+  RoomCardImg,
+  RoomCardWrapper,
+} from '../styles/CategoryScreen.style';
 import { FilterBox } from '../styles/Filter.style';
 
 const CategoryScreen = () => {
@@ -70,7 +78,86 @@ const CategoryScreen = () => {
                     {rooms.data ? rooms.data.length : 0})
                   </Typography>
                 </div>
-                {isLoading ? <Skeleton /> : <h1>Room Category</h1>}
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  <>
+                    <RoomCardWrapper>
+                      {rooms?.data?.map((room) => (
+                        <Link to={`/room/${room.roomid}`} key={room.roomid}>
+                          <RoomCard>
+                            <div className="container">
+                              <RoomCardImg>
+                                <Image img={room.thumbnail} alt={room.title} />
+                              </RoomCardImg>
+                              <RoomCardBody>
+                                <div className="room__name">
+                                  <Typography
+                                    as="h2"
+                                    fontSize="0.75rem"
+                                    lineHeight="0.9rem"
+                                    color="rgba(0,0,0,0.7)"
+                                  >
+                                    {room.title}
+                                  </Typography>
+                                  <div className="rating">
+                                    <Rate defaultValue={4.5} disabled />
+                                  </div>
+                                </div>
+                                <div className="room__price">
+                                  {!room.discount ? (
+                                    <>
+                                      <div className="price">
+                                        &#8358;
+                                        <NumberFormat
+                                          displayType={'text'}
+                                          value={room.price}
+                                          thousandSeparator={true}
+                                        />
+                                        /night
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div className="price">
+                                        &#8358;
+                                        <NumberFormat
+                                          displayType={'text'}
+                                          value={room?.discountPrice || 10000}
+                                          thousandSeparator={true}
+                                        />
+                                        /night
+                                      </div>
+                                      <div className="discount">
+                                        <s>
+                                          &#8358;
+                                          <NumberFormat
+                                            displayType={'text'}
+                                            value={room.price}
+                                            thousandSeparator={true}
+                                          />
+                                        </s>
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                                <div className="room__btn">
+                                  <Button
+                                    bg="#000"
+                                    color="#fff"
+                                    label="Book now"
+                                    hoverBg="var(--yellow)"
+                                    hoverColor="#000"
+                                  />
+                                </div>
+                              </RoomCardBody>
+                            </div>
+                          </RoomCard>
+                        </Link>
+                      ))}
+                    </RoomCardWrapper>
+                  </>
+                )}
               </RightWrapper>
             </div>
           </RoomContent>

@@ -54,7 +54,7 @@ export const LeftWrapper = styled.aside`
     background: var(--yellow);
     border-radius: 5px;
     margin-top: 0px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border: none;
   }
 `;
 
