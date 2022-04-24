@@ -1,9 +1,32 @@
 import React from 'react';
-import { FilterWrapper } from './Filter.style';
+import { FilterWrapper } from '../../styles/Filter.style';
 import { Checkbox } from 'antd';
 import { Typography } from '../../GlobalStyle.js';
+import { useDispatch } from 'react-redux';
+import { getRoomByCategory } from '../../redux/room/roomCategorySlice';
+import { filterRooms } from '../../redux/room/roomSlice';
 
 const Filter = () => {
+  const dispatch = useDispatch();
+  const handlefilterCategory = (e) => {
+    if (e.target.checked) {
+      const data = e.target.name;
+      const queryStr = {
+        category: data,
+      };
+      dispatch(getRoomByCategory(queryStr));
+    }
+  };
+  const handlefilterBedSize = (e) => {
+    if (e.target.checked) {
+      const data = e.target.name;
+      const queryStr = {
+        bedSize: data,
+      };
+      dispatch(filterRooms(queryStr));
+    }
+  };
+
   return (
     <>
       <FilterWrapper>
@@ -13,19 +36,40 @@ const Filter = () => {
               Filter by:
             </Typography>
           </div>
+
           <div className="filter">
             <Typography as="h3" fontSize="1rem" fontWeight="600">
-              Popular filters
+              Room Type
             </Typography>
             <div className="filter__items">
-              <Checkbox>Free Wifi</Checkbox>
-              <span>09</span>
+              <Checkbox onChange={handlefilterCategory} name="exclusive">
+                Exclusive
+              </Checkbox>
             </div>
             <div className="filter__items">
-              <Checkbox>Air conditioning</Checkbox>
+              <Checkbox onChange={handlefilterCategory} name="delux">
+                Delux
+              </Checkbox>
             </div>
             <div className="filter__items">
-              <Checkbox>Non-smoking rooms</Checkbox>
+              <Checkbox onChange={handlefilterCategory} name="presidential">
+                Presidential
+              </Checkbox>
+            </div>
+          </div>
+          <div className="filter">
+            <Typography as="h3" fontSize="1rem" fontWeight="600">
+              Bed Size
+            </Typography>
+            <div className="filter__items">
+              <Checkbox onChange={handlefilterBedSize} name="king">
+                King
+              </Checkbox>
+            </div>
+            <div className="filter__items">
+              <Checkbox onChange={handlefilterBedSize} name="double_king">
+                Double King
+              </Checkbox>
             </div>
           </div>
           <div className="filter">
@@ -34,7 +78,6 @@ const Filter = () => {
             </Typography>
             <div className="filter__items">
               <Checkbox>1 star</Checkbox>
-              <span>09</span>
             </div>
             <div className="filter__items">
               <Checkbox>2 star</Checkbox>

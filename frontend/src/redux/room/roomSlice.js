@@ -33,6 +33,24 @@ export const getRooms = createAsyncThunk(
   }
 );
 
+// get all rooms
+export const filterRooms = createAsyncThunk(
+  'rooms/filter',
+  async (data, thunkAPI) => {
+    try {
+      return await roomService.filterRoom(data);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const roomSlice = createSlice({
   name: 'room',
   initialState,
@@ -46,6 +64,9 @@ export const roomSlice = createSlice({
     },
     refresh: (state) => {
       state.isSuccess = false;
+    },
+    setSuccess: (state) => {
+      state.isSuccess = true;
     },
   },
   extraReducers: {
@@ -65,8 +86,24 @@ export const roomSlice = createSlice({
       state.message = action.payload;
       state.rooms = null;
     },
+    [filterRooms.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [filterRooms.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.rooms = action.payload;
+      state.checkIn = searchData?.checkIn;
+      state.checkOut = searchData?.checkOut;
+    },
+    [filterRooms.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
+      state.rooms = null;
+    },
   },
 });
 
-export const { reset, refresh } = roomSlice.actions;
+export const { reset, refresh, setSuccess, filterRoom } = roomSlice.actions;
 export default roomSlice.reducer;

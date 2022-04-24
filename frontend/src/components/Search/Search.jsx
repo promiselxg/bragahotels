@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Container } from '../../GlobalStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import { SearchContainer, SearchWrapper, SelectBox } from './Search.style';
+import {
+  SearchContainer,
+  SearchWrapper,
+  SelectBox,
+} from '../../styles/Search.style';
 import { DatePicker, Select } from 'antd';
 
 import Button from '../Button';

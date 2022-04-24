@@ -5,6 +5,7 @@ const ROLES = require('../utils/roles');
 const moment = require('moment');
 const db = require('../config/db');
 const fs = require('fs');
+const { rooms } = require('../config/db');
 
 //@desc     Register Room
 //@route    POST /api/v1/rooms/new
@@ -97,6 +98,40 @@ const getRooms = asyncHandler(async (req, res) => {
   res.status(200).json(res.queryResults);
 });
 
+//@desc     Filter/Sort Rooms
+//@route    POST /api/v1/rooms/filter
+//@access   Public
+const sortRooms = asyncHandler(async (req, res) => {
+  //  sort by specific fields
+  const reqQuery = { ...req.body };
+  //  sort based on given condition / create query string
+  let queryStr = JSON.stringify(reqQuery);
+  try {
+    const response = await rooms.findAll({
+      where: {
+        [Op.and]: [JSON.parse(queryStr)],
+        qty: {
+          [Op.gte]: 1,
+        },
+      },
+    });
+    if (response) {
+      res.status(200).json({
+        status: true,
+        count: response.length,
+        data: response,
+      });
+    } else {
+      res.status(404).json({
+        status: false,
+        message: 'Requested room was not found.',
+      });
+    }
+  } catch (error) {
+    res.status(400);
+    throw new Error(error);
+  }
+});
 //@desc     Get Single Room
 //@route    GET /api/v1/rooms/:id
 //@access   Public
@@ -334,4 +369,5 @@ module.exports = {
   deleteRoom,
   updateRoom,
   bookRoom,
+  sortRooms,
 };

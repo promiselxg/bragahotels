@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api/v1/rooms';
-
+const config = {
+  'Content-Type': 'appilcation/json',
+};
 //  Get all rooms
 const getAllRooms = async (data) => {
   if (data === 'all') {
@@ -26,9 +28,23 @@ const getRoomDetails = async (roomid) => {
   const response = await axios.get(`${API_URL}/${roomid}`);
   return response.data;
 };
+
+//  get rooms by category
+const getRoomsByCategory = async (data) => {
+  const response = await axios.post(`${API_URL}/filter`, data, config);
+  return response.data;
+};
+
+//  filter rooms
+const filterRoom = async (data) => {
+  const response = await axios.post(`${API_URL}/filter`, data, config);
+  return response.data;
+};
 const roomService = {
   getAllRooms,
   getRoomDetails,
+  getRoomsByCategory,
+  filterRoom,
 };
 
 export default roomService;

@@ -6,6 +6,7 @@ import {
   RoomScreen,
   RoomInfoScreen,
   PageNotFound,
+  RoomCategoryScreen,
 } from './screens';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<HomeScreen />} />
           <Route path="/rooms" element={<RoomScreen />} />
           <Route path="/room/:id" element={<RoomInfoScreen />} />
+          <Route path="/rooms/:category" element={<RoomCategoryScreen />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Layout>

@@ -9,7 +9,7 @@ import {
   RoomContent,
   RoomHeader,
 } from '../components/Room/Room.style';
-import { FilterBox } from '../components/Search/Filter.style.js';
+import { FilterBox } from '../styles/Filter.style';
 import { Links } from '../components/NavAnchor';
 import { Typography } from '../GlobalStyle';
 import { useEffect } from 'react';

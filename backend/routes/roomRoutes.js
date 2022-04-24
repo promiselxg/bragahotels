@@ -7,6 +7,7 @@ const {
   deleteRoom,
   updateRoom,
   bookRoom,
+  sortRooms,
 } = require('../controllers/roomController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const { queryFilter } = require('../middleware/queryMiddleware');
@@ -18,6 +19,7 @@ const router = express.Router();
 router.route('/new').post(verifyToken, uploadFile.array('file'), addRoom);
 router.route('/').get(queryFilter(db.rooms), getRooms);
 router.route('/:id/book/').post(bookRoom);
+router.route('/filter').post(sortRooms);
 router
   .route('/:id')
   .get(getSingleRoom)
