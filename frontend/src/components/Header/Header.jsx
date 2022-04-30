@@ -21,13 +21,15 @@ const Header = () => {
               <Links url="/about" label="About Us" />
               <Links url="/rooms" label="Rooms" />
               <Links url="/contact" label="Contact Us" />
-              <Button
-                label="Booking"
-                color="#000"
-                bg="var(--yellow)"
-                hoverBg="var(--blue)"
-                hoverColor="#fff"
-              />
+              <Link to="/rooms">
+                <Button
+                  label="Book a Room"
+                  color="#000"
+                  bg="var(--yellow)"
+                  hoverBg="var(--blue)"
+                  hoverColor="#fff"
+                />
+              </Link>
             </Nav>
           </HeaderContainer>
         </Container>

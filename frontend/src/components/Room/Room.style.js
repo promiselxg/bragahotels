@@ -38,7 +38,7 @@ export const RoomContent = styled.div`
   .container {
     display: flex;
     width: 100%;
-  }
+   }
 `;
 
 export const LeftWrapper = styled.aside`

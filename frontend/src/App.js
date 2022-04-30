@@ -7,6 +7,7 @@ import {
   RoomInfoScreen,
   PageNotFound,
   RoomCategoryScreen,
+  CheckOutScreen,
 } from './screens';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/rooms" element={<RoomScreen />} />
           <Route path="/room/:id" element={<RoomInfoScreen />} />
           <Route path="/rooms/:category" element={<RoomCategoryScreen />} />
+          <Route path="/rooms/:roomid/book" element={<CheckOutScreen />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Layout>

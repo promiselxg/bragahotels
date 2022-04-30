@@ -7,5 +7,6 @@ export const store = configureStore({
     listRooms: roomReducer,
     roomInfo: singleRoomReducer,
     roomCategory: roomCategoryReducer,
+    userInfo: '',
   },
 });

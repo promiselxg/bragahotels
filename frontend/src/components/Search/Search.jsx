@@ -26,7 +26,6 @@ const Search = () => {
   const [kid, setKid] = useState(0);
   const [checkin, setCheckIn] = useState();
   const [checkout, setCheckOut] = useState();
-  const [error, setError] = useState(false);
 
   const selectDate = (date) => {
     setCheckIn(moment(date[0]).format('DD-MM-YYYY'));

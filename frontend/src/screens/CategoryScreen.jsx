@@ -143,13 +143,15 @@ const CategoryScreen = () => {
                                   )}
                                 </div>
                                 <div className="room__btn">
-                                  <Button
-                                    bg="#000"
-                                    color="#fff"
-                                    label="Book now"
-                                    hoverBg="var(--yellow)"
-                                    hoverColor="#000"
-                                  />
+                                  <Link to={`/rooms/${room.roomid}/book`}>
+                                    <Button
+                                      bg="#000"
+                                      color="#fff"
+                                      label="Book now"
+                                      hoverBg="var(--yellow)"
+                                      hoverColor="#000"
+                                    />
+                                  </Link>
                                 </div>
                               </RoomCardBody>
                             </div>
