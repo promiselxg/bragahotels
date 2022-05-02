@@ -6,6 +6,7 @@ const moment = require('moment');
 const db = require('../config/db');
 const fs = require('fs');
 const { rooms } = require('../config/db');
+const { user } = require('../utils/roles');
 
 //@desc     Register Room
 //@route    POST /api/v1/rooms/new
@@ -244,19 +245,34 @@ const updateRoom = asyncHandler(async (req, res) => {
 //@access   Public
 const bookRoom = asyncHandler(async (req, res) => {
   //  get id
+
   const { id } = req.params;
-  let transaction = true;
+  const { roomid } = req.body.roomInfo;
+  if (id != roomid) {
+    res.status(401);
+    throw new Error('Invalid room ID');
+  }
+
+  req.body.guestMember.map(
+    (user) => (
+      (fname = user.first_name),
+      (lname = user.last_name),
+      (phone = user.phone),
+      (uemail = user.email)
+    )
+  );
+
   const data = {
-    userType: req.user ? 'user' : 'guest',
-    first_name: req.user ? req.user.firstname : req.body.first_name,
-    last_name: req.user ? req.user.lastname : req.body.last_name,
-    phone_number: req.user ? req.user.phoneNumber : req.body.phone_number,
-    email: req.user ? req.user.email : req.body.email,
+    userType: req.user ? req.user.id : 'guest',
+    first_name: req.user ? req.user.firstname : fname,
+    last_name: req.user ? req.user.lastname : lname,
+    phone_number: req.user ? req.user.phoneNumber : phone,
+    email: req.user ? req.user.email : uemail,
     special_request: req.body.special_request,
-    checkin: req.body.checkIn,
-    checkout: req.body.checkOut,
-    totalDays: req.body.totalDays,
-    totalAmount: req.body.totalAmount,
+    checkin: req.body.roomInfo.checkin,
+    checkout: req.body.roomInfo.checkout,
+    totalDays: req.body.roomInfo.totalDays,
+    totalAmount: req.body.roomInfo.totalAmount,
   };
 
   const {
@@ -309,31 +325,29 @@ const bookRoom = asyncHandler(async (req, res) => {
 
     //  connect payment api
     try {
-      if (transaction) {
-        // insert record to reservations table
-        const response = await db.reservation.create({
-          userid: req.user ? req.user.id : 'guest',
-          roomid: id,
-          checkIn: checkin,
-          checkOut: checkout,
-          totalAmount: totalAmount,
-          totalDays: totalDays,
-          status: 'paid',
-          firstname: first_name,
-          lastname: last_name,
-          phoneNumber: phone_number,
-          email: email,
-          specialRequest: special_request,
-        });
-        if (response) {
-          //  update current rooms availability
-          await db.rooms.update({ qty: newQty }, { where: { roomid: id } });
-        }
-        res.status(201).json({
-          status: true,
-          message: 'room reservation successfull.',
-        });
+      // insert record to reservations table
+      const response = await db.reservation.create({
+        userid: req.user ? req.user.id : 'guest',
+        roomid: id,
+        checkIn: checkin,
+        checkOut: checkout,
+        totalAmount: totalAmount,
+        totalDays: totalDays,
+        status: 'pending',
+        firstname: first_name,
+        lastname: last_name,
+        phoneNumber: phone_number,
+        email: email,
+        specialRequest: special_request,
+      });
+      if (response) {
+        //  update current rooms availability
+        await db.rooms.update({ qty: newQty }, { where: { roomid: id } });
       }
+      //  send user receipt
+      res.status(201).json({
+        status: true,
+      });
     } catch (error) {
       res.status(400);
       throw new Error(error);
