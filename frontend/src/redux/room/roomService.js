@@ -49,7 +49,13 @@ const roomReservation = async (data) => {
   return response.data;
 };
 const payment = async (data) => {
-  console.log(data);
+  const { roomid } = data;
+  const response = await axios.put(
+    `${API_URL}/${roomid}/payment`,
+    data,
+    config
+  );
+  return response.data;
 };
 const roomService = {
   getAllRooms,

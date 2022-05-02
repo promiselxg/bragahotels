@@ -26,11 +26,13 @@ import { getSingleRoom } from '../redux/room/singleRoomSlice';
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { makeReservation, reset } from '../redux/room/roomReservationSlice';
+import { processPayment } from '../redux/room/roomPaymentSlice';
 
 const { TextArea } = Input;
 
 const CheckoutScreen = () => {
   // const userInfo = useSelector((state) => state.userInfo);
+  const { success } = useSelector((state) => state.payment);
   const { room } = useSelector((state) => state.roomInfo);
   const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.reservation
@@ -67,6 +69,13 @@ const CheckoutScreen = () => {
     ? moment.duration(checkout.diff(checkin)).asDays() + 1
     : 1;
   const totalPrice = duration * room?.data?.price;
+
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: `${guestMember[0].email}`,
+    amount: totalPrice * 100,
+    publicKey: `${process.env.REACT_APP_PAYSTACK_KEY}`,
+  };
 
   // const addNewGuest = () => {
   //   let _guestMember = [...guestMember];
@@ -133,10 +142,32 @@ const CheckoutScreen = () => {
     window.scrollTo(0, 0);
   }, [dispatch, id]);
 
+  const initializePayment = usePaystackPayment(config);
+
+  useEffect(() => {
+    if (isSuccess) {
+      initializePayment(
+        (reference) => {
+          const response = reference;
+          const data = {
+            roomid: id,
+            referenceNo: response.reference,
+            status: response.status,
+            transactionId: response.transaction,
+          };
+          dispatch(processPayment(data));
+        },
+        () => console.log('closed')
+      );
+    }
+    dispatch(reset());
+  }, [dispatch, isSuccess, initializePayment, id]);
   return (
     <>
       {isError && <Notification message={message} type="error" />}
-      {isSuccess && <Notification message={message.message} type="success" />}
+      {success && (
+        <Notification message="Room reservation successfull." type="success" />
+      )}
       <Section>
         <CheckOutWrapper>
           <RoomHeader>

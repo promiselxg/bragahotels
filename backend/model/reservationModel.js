@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM('booked', 'paid', 'cancelled'),
-      defaultValue: 'booked',
+      type: DataTypes.ENUM('pending', 'success', 'cancelled'),
+      defaultValue: 'pending',
     },
     firstname: {
       type: DataTypes.STRING,
@@ -47,6 +47,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     specialRequest: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    referenceNo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    transactionId: {
       type: DataTypes.STRING,
       allowNull: true,
     },

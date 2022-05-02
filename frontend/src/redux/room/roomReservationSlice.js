@@ -25,24 +25,6 @@ export const makeReservation = createAsyncThunk(
     }
   }
 );
-// Process Payment
-export const processPayment = createAsyncThunk(
-  'rooms/reservation/payment',
-  async (data, thunkAPI) => {
-    try {
-      return await roomService.payment(data);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
 export const roomReservationSlice = createSlice({
   name: 'room',
   initialState,
@@ -65,21 +47,6 @@ export const roomReservationSlice = createSlice({
       state.message = action.payload;
     },
     [makeReservation.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-      state.isSuccess = false;
-      state.message = action.payload;
-    },
-    [processPayment.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [processPayment.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.isSuccess = true;
-      state.isError = false;
-      state.message = action.payload;
-    },
-    [processPayment.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.isSuccess = false;

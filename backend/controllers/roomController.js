@@ -358,6 +358,34 @@ const bookRoom = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc     Make Payment
+//@route    PUT /api/v1/rooms/:id/status
+//@access   Private
+const completePayment = asyncHandler(async (req, res) => {
+  const { roomid } = req.body;
+  try {
+    //  check if room exist
+    const roomExist = await db.reservation.findOne({ where: { roomid } });
+    if (!roomExist) {
+      res.status(400);
+      throw new Error('Invalid request ID.');
+    }
+    const { status, referenceNo, transactionId } = req.body;
+    //  update reservation
+    const update = await db.reservation.update(
+      { status, referenceNo, transactionId },
+      { where: { roomid } }
+    );
+    if (update) {
+      res.status(200).json({
+        data: 'Room reservation successfull.',
+      });
+    }
+  } catch (error) {
+    res.status(401);
+    throw new Error(error);
+  }
+});
 //  upload multiple image function
 const cloudinaryImageUploadMethod = asyncHandler(async (file) => {
   return new Promise((resolve) => {
@@ -384,4 +412,5 @@ module.exports = {
   updateRoom,
   bookRoom,
   sortRooms,
+  completePayment,
 };
