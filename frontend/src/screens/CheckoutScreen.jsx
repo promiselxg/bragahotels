@@ -1,12 +1,12 @@
 import { Breadcrumb, Checkbox } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Button, Section } from '../components';
+import { Button, Notification, Section } from '../components';
 import { Links } from '../components/NavAnchor';
 import { RoomHeader } from '../components/Room/Room.style';
 import { Typography } from '../GlobalStyle';
 import { Input } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+import { usePaystackPayment } from 'react-paystack';
 import {
   AccountSumary,
   CheckOutContainer,
@@ -18,16 +18,36 @@ import {
   Right,
   RoomDetails,
 } from '../styles/CheckoutScreen.style';
-import { FiCheckCircle, FiMail, FiPhone, FiPlus, FiUser } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { FiCheckCircle, FiMail, FiPhone, FiUser } from 'react-icons/fi';
+import { Link, useLocation } from 'react-router-dom';
 import { HotelRules } from '../utils/Data';
-import { useSelector } from 'react-redux';
-const { TextArea } = Input;
-const CheckoutScreen = () => {
-  const userInfo = useSelector((state) => state.userInfo);
-  const { room } = useSelector((state) => state.roomInfo);
-  const { checkIn, checkOut } = useSelector((state) => state.listRooms);
+import { useDispatch, useSelector } from 'react-redux';
+import { getSingleRoom } from '../redux/room/singleRoomSlice';
+import NumberFormat from 'react-number-format';
+import moment from 'moment';
+import { makeReservation, reset } from '../redux/room/roomReservationSlice';
 
+const { TextArea } = Input;
+
+const CheckoutScreen = () => {
+  // const userInfo = useSelector((state) => state.userInfo);
+  const { room } = useSelector((state) => state.roomInfo);
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.reservation
+  );
+  let search = JSON.parse(localStorage.getItem('search'));
+
+  const checkIn = search
+    ? search.checkIn
+    : new Date().toLocaleDateString().split('/').join('-');
+  const checkOut = search
+    ? search.checkOut
+    : new Date().toLocaleDateString().split('/').join('-');
+  const adult = search ? search.adult : 1;
+  const kids = search ? search.kids : 0;
+
+  const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const [specialRequest, setSpecialRequest] = useState('');
   const [terms, setTerms] = useState(false);
   const [guestMember, setGuestMember] = useState([
@@ -39,24 +59,32 @@ const CheckoutScreen = () => {
       id: uuidv4(),
     },
   ]);
+  const location = useLocation();
+  const id = location.pathname.split('/')[2];
+  const checkin = moment(checkIn, 'DD-MM-YYYY');
+  const checkout = moment(checkOut, 'DD-MM-YYYY');
+  const duration = search
+    ? moment.duration(checkout.diff(checkin)).asDays() + 1
+    : 1;
+  const totalPrice = duration * room?.data?.price;
 
-  const addNewGuest = () => {
-    let _guestMember = [...guestMember];
-    _guestMember.push({
-      first_name: '',
-      last_name: '',
-      phone: '',
-      email: '',
-      id: uuidv4(),
-    });
-    setGuestMember(_guestMember);
-  };
+  // const addNewGuest = () => {
+  //   let _guestMember = [...guestMember];
+  //   _guestMember.push({
+  //     first_name: '',
+  //     last_name: '',
+  //     phone: '',
+  //     email: '',
+  //     id: uuidv4(),
+  //   });
+  //   setGuestMember(_guestMember);
+  // };
 
-  const removeGuestMember = (id) => {
-    let _guestMember = [...guestMember];
-    _guestMember = _guestMember.filter((guest) => guest.id !== id);
-    setGuestMember(_guestMember);
-  };
+  // const removeGuestMember = (id) => {
+  //   let _guestMember = [...guestMember];
+  //   _guestMember = _guestMember.filter((guest) => guest.id !== id);
+  //   setGuestMember(_guestMember);
+  // };
 
   const handleInputFieldChange = (id, event) => {
     // get input index to be changed
@@ -66,7 +94,8 @@ const CheckoutScreen = () => {
     setGuestMember(_guestMember);
   };
 
-  const handleSubmit = async (e) => {
+  //  Submit form
+  const HandleSubmit = async (e) => {
     e.preventDefault();
     let valid = true;
     guestMember.map((guest, key) => {
@@ -86,15 +115,28 @@ const CheckoutScreen = () => {
       const userData = {
         guestMember,
         special_request: specialRequest,
+        roomInfo: {
+          roomid: id,
+          checkin: checkIn,
+          checkout: checkOut,
+          totalDays: duration,
+          totalAmount: totalPrice,
+        },
       };
-
-      const response = await axios.post(`/api/v1/rooms/:id/book`);
+      dispatch(makeReservation(userData));
+      dispatch(reset());
     }
   };
-  const fetchRoomInfo = () => {};
-  // useEffect(() => {}, []);
+
+  useEffect(() => {
+    dispatch(getSingleRoom(id));
+    window.scrollTo(0, 0);
+  }, [dispatch, id]);
+
   return (
     <>
+      {isError && <Notification message={message} type="error" />}
+      {isSuccess && <Notification message={message.message} type="success" />}
       <Section>
         <CheckOutWrapper>
           <RoomHeader>
@@ -126,6 +168,9 @@ const CheckoutScreen = () => {
                 hoverBg="var(--yellow)"
                 hoverColor="#000"
               />
+              <button onClick={HandleSubmit}>
+                Paystack Hooks Implementation
+              </button>
             </div>
             <CheckoutUserInfo>
               <Left>
@@ -143,8 +188,8 @@ const CheckoutScreen = () => {
                     </div>
                     <div className="formFields">
                       <div className="form">
-                        {guestMember.map((guest) => (
-                          <div key={guest.id}>
+                        {guestMember.map((guest, i) => (
+                          <div key={i}>
                             <span className="name">Guest Name *</span>
                             <div className="form-field">
                               <Input
@@ -196,7 +241,7 @@ const CheckoutScreen = () => {
                                 </p>
                               </div>
                             </div>
-                            <div
+                            {/* <div
                               className="btn"
                               style={{ display: 'flex', margin: '0px 5px' }}
                             >
@@ -229,7 +274,7 @@ const CheckoutScreen = () => {
                                   Remove Guest
                                 </span>
                               )}
-                            </div>
+                            </div> */}
                           </div>
                         ))}
 
@@ -277,17 +322,11 @@ const CheckoutScreen = () => {
                         </div>
                         <div className="rules btn">
                           <Button
-                            label="Pay online (you save N3,000)"
-                            bg="var(--yellow)"
-                            hoverBg="var(--blue)"
-                            hoverColor="#fff !important"
-                            onClick={handleSubmit}
-                          />
-                          <Button
                             label="Pay at the hotel."
                             bg="var(--blue)"
                             hoverBg="var(--yellow)"
                             hoverColor="#fff"
+                            disabled={isLoading}
                           />
                         </div>
                       </Typography>
@@ -299,7 +338,12 @@ const CheckoutScreen = () => {
                 <div className="container">
                   <div className="heading">Your booking summary</div>
                   <CheckoutDetails>
-                    <Typography as="h2" fontSize="0.9rem" fontWeight="600">
+                    <Typography
+                      as="h2"
+                      fontSize="0.9rem"
+                      fontWeight="600"
+                      style={{ textTransform: 'capitalize' }}
+                    >
                       {room?.data?.title}
                     </Typography>
                     <Typography as="p" fontSize="0.75rem">
@@ -325,30 +369,48 @@ const CheckoutScreen = () => {
                       fontWeight="600"
                       margin="-10px 0 0 0"
                     >
-                      2 Nights Stay
+                      {duration > 1
+                        ? `${duration} Nights Stay`
+                        : `1 Night Stay`}
                     </Typography>
                   </CheckoutDetails>
                   <div className="heading">
                     Rooms &amp; Rate&nbsp;(price for 1 night)
                   </div>
                   <RoomDetails>
-                    <p>Room Details: 2 adults, 0 child</p>
+                    <p>
+                      Room Details: {adult} adults, {kids} child
+                    </p>
                     <PriceInfo>
                       <table>
                         <tbody>
                           <tr>
                             <td style={{ fontSize: '0.8rem' }}>Room Charge</td>
-                            <td style={{ fontWeight: '600' }}>N10,000</td>
+                            <td style={{ fontWeight: '600' }}>
+                              &#8358;
+                              <NumberFormat
+                                displayType={'text'}
+                                value={room?.data?.price}
+                                thousandSeparator={true}
+                              />
+                            </td>
                           </tr>
                           <tr>
                             <td style={{ fontSize: '0.8rem' }}>
                               Tax &amp; fees
                             </td>
-                            <td style={{ fontWeight: '600' }}>N500.00</td>
+                            <td style={{ fontWeight: '600' }}>&#8358;0.00</td>
                           </tr>
                           <tr>
                             <td style={{ fontSize: '0.8rem' }}>Total Price</td>
-                            <td style={{ fontWeight: '600' }}>N10,500.00</td>
+                            <td style={{ fontWeight: '600' }}>
+                              &#8358;
+                              <NumberFormat
+                                displayType={'text'}
+                                value={totalPrice}
+                                thousandSeparator={true}
+                              />
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -360,12 +422,14 @@ const CheckoutScreen = () => {
                       label="Pay Online (You Save N3,000)"
                       hoverBg="var(--blue)"
                       hoverColor="#fff"
-                      onClick={handleSubmit}
+                      disabled={isLoading}
+                      onClick={HandleSubmit}
                     />
                     <Button
                       bg="var(--blue)"
                       label="Pay at the Hotel"
                       hoverBg="var(--yellow)"
+                      disabled={isLoading}
                     />
                   </AccountSumary>
                 </div>

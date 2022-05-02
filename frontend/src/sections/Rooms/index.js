@@ -177,7 +177,7 @@ const RoomsSection = () => {
                           </>
                         )}
 
-                        <Link to={`/room/${room.roomid}`}>
+                        <Link to={`/rooms/${room.roomid}/book`}>
                           <Button
                             label="Book Now"
                             bg="var(--yellow)"

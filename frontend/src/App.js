@@ -1,6 +1,8 @@
 import Layout from './components/Layout';
 import { Routes, Route } from 'react-router-dom';
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   HomeScreen,
   RoomScreen,
@@ -22,6 +24,7 @@ function App() {
           <Route path="/rooms/:roomid/book" element={<CheckOutScreen />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+        <ToastContainer hideProgressBar newestOnTop={true} />
       </Layout>
     </>
   );

@@ -13,3 +13,4 @@ export { default as Search } from './Search/Search';
 export { default as Filter } from './Search/Filter';
 export { default as Footer } from './Footer/Footer';
 export { default as Room } from './Room/Room';
+export { default as Notification } from './Notification';

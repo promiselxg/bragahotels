@@ -40,11 +40,24 @@ const filterRoom = async (data) => {
   const response = await axios.post(`${API_URL}/filter`, data, config);
   return response.data;
 };
+
+//  Room Reservation /api/v1/rooms/:id/book
+
+const roomReservation = async (data) => {
+  const { roomid } = data.roomInfo;
+  const response = await axios.post(`${API_URL}/${roomid}/book`, data, config);
+  return response.data;
+};
+const payment = async (data) => {
+  console.log(data);
+};
 const roomService = {
   getAllRooms,
   getRoomDetails,
   getRoomsByCategory,
   filterRoom,
+  roomReservation,
+  payment,
 };
 
 export default roomService;
