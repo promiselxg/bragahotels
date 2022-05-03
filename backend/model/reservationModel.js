@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    reservation_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     referenceNo: {
       type: DataTypes.STRING,
       allowNull: true,

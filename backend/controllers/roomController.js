@@ -7,6 +7,8 @@ const db = require('../config/db');
 const fs = require('fs');
 const { rooms } = require('../config/db');
 const { user } = require('../utils/roles');
+const sgMail = require('@sendgrid/mail');
+const { sendEmail } = require('../utils/sendgrid');
 
 //@desc     Register Room
 //@route    POST /api/v1/rooms/new
@@ -322,8 +324,11 @@ const bookRoom = asyncHandler(async (req, res) => {
     }
     let newQty;
     newQty = roomExist.qty - 1;
-
-    //  connect payment api
+    // generate random test code
+    const reservation_id = Math.random()
+      .toString(36)
+      .substring(2, 7)
+      .toUpperCase();
     try {
       // insert record to reservations table
       const response = await db.reservation.create({
@@ -339,11 +344,39 @@ const bookRoom = asyncHandler(async (req, res) => {
         phoneNumber: phone_number,
         email: email,
         specialRequest: special_request,
+        reservation_id: reservation_id,
       });
       if (response) {
         //  update current rooms availability
         await db.rooms.update({ qty: newQty }, { where: { roomid: id } });
+        // Send Confirmation Email to user
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        // email template
+        const templateId = `${process.env.RESERVATION_COMPLETED_TEMPLATE_ID}`;
+        let dynamic_template_data = {
+          name: `${first_name} ${last_name}`,
+          reference: reservation_id,
+          total_days: totalDays,
+          check_in: checkin,
+          check_out: checkout,
+          adults: 1,
+          kids: 0,
+          special_request: special_request,
+          room_name: roomExist.title,
+          policy: roomExist.cancellation,
+          total_price: new Intl.NumberFormat().format(totalAmount),
+        };
+        const msg = {
+          to: email, // Change to your recipient
+          from: 'okeydeede@gmail.com', // Change to your verified sender
+          subject: 'Your booking is confirmed and completed',
+          templateId,
+          dynamic_template_data,
+        };
+        // send email
+        sendEmail(msg);
       }
+
       //  send user receipt
       res.status(201).json({
         status: true,

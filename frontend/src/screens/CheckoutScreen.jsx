@@ -199,9 +199,6 @@ const CheckoutScreen = () => {
                 hoverBg="var(--yellow)"
                 hoverColor="#000"
               />
-              <button onClick={HandleSubmit}>
-                Paystack Hooks Implementation
-              </button>
             </div>
             <CheckoutUserInfo>
               <Left>
@@ -353,11 +350,20 @@ const CheckoutScreen = () => {
                         </div>
                         <div className="rules btn">
                           <Button
+                            bg="var(--yellow)"
+                            label="Pay Online"
+                            hoverBg="var(--blue)"
+                            hoverColor="#fff"
+                            disabled={isLoading}
+                            onClick={HandleSubmit}
+                          />
+                          <Button
                             label="Pay at the hotel."
                             bg="var(--blue)"
                             hoverBg="var(--yellow)"
                             hoverColor="#fff"
                             disabled={isLoading}
+                            onClick={HandleSubmit}
                           />
                         </div>
                       </Typography>
@@ -450,7 +456,7 @@ const CheckoutScreen = () => {
                   <AccountSumary>
                     <Button
                       bg="var(--yellow)"
-                      label="Pay Online (You Save N3,000)"
+                      label="Pay Online"
                       hoverBg="var(--blue)"
                       hoverColor="#fff"
                       disabled={isLoading}
@@ -461,6 +467,7 @@ const CheckoutScreen = () => {
                       label="Pay at the Hotel"
                       hoverBg="var(--yellow)"
                       disabled={isLoading}
+                      onClick={HandleSubmit}
                     />
                   </AccountSumary>
                 </div>
