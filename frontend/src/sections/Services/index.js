@@ -19,6 +19,10 @@ const ServicesWrapper = styled.div`
     gap: 10px;
     padding-top: 20px;
   }
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 90%;
+    margin: 0 auto;
+  }
 `;
 const ServicesCard = styled.div`
   width: 292px;
@@ -28,6 +32,9 @@ const ServicesCard = styled.div`
   overflow: hidden;
   padding: 35px 30px;
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const CardTitle = styled.div`
   padding: 10px 0;

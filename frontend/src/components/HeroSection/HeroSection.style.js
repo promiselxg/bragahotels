@@ -13,6 +13,10 @@ export const HeroSectionWrapper = styled.section`
     color: #fff;
     cursor: pointer;
   }
+  @media screen and (min-width: 320px) and (max-width: 960px) {
+    background-size: cover;
+    background-position-x: 50%;
+  }
 `;
 
 export const SliderWrapper = styled.div`

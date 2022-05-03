@@ -12,11 +12,18 @@ export const FooterWrapper = styled.footer`
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      width: 90%;
+      margin: 0 auto;
+    }
   }
 `;
 
 export const FooterItem = styled.div`
   width: 320px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 95%;
+  }
 `;
 export const FooterTitle = styled.div``;
 export const FooterLinks = styled.div`
@@ -35,6 +42,12 @@ export const FooterLinks = styled.div`
       color: #fff !important;
       font-size: 1.3rem;
     }
+  }
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 90%;
   }
 `;
 

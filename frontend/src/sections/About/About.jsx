@@ -14,10 +14,28 @@ const AboutSectionWrapper = styled.div`
     justify-content: center;
     display: flex;
     flex-direction: column;
-
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      text-align: left !important;
+      align-items: left !important;
+      justify-content: left !important;
+    }
     p {
       font-weight: 400;
       color: #333;
+    }
+  }
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 90%;
+    margin: 0 auto;
+    height: 100%;
+
+    .container {
+      p {
+        font-size: small;
+      }
+      h1 {
+        font-size: 1.3rem;
+      }
     }
   }
 `;

@@ -26,6 +26,22 @@ const CategoryWrapper = styled.div`
     flex-wrap: wrap;
     width: 100%;
     gap: 10px;
+    @media screen and (min-width: 376px) and (max-width: 480px) {
+      width: 90%;
+    }
+  }
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 90%;
+    padding: 50px 0;
+    margin: 0px auto;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+    a {
+      padding: 0;
+      margin: 0;
+    }
   }
 `;
 const Card = styled.div`
@@ -39,6 +55,10 @@ const Card = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  @media screen and (min-width: 376px) and (max-width: 480px) {
+    margin: 0 auto;
+    width: 350px;
   }
 `;
 const Category = () => {

@@ -10,6 +10,9 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   text-align: center;
   align-items: center;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    display: none;
+  }
 `;
 export const NavLogo = styled.div`
   display: flex;

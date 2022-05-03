@@ -76,43 +76,45 @@ const Search = () => {
                 />
               </div>
             </SelectBox>
-            <SelectBox flex="0.1">
-              <span>Adult</span>
-              <div className="dateWrapper">
-                <Select
-                  labelInValue
-                  defaultValue={{ value: adult }}
-                  onChange={(e) => setAdult(e.value)}
-                  bordered={false}
-                >
-                  <Option value="1">1</Option>
-                  <Option value="2">2</Option>
-                  <Option value="3">3</Option>
-                  <Option value="4">4</Option>
-                  <Option value="5">5</Option>
-                  <Option value="6">6</Option>
-                </Select>
-              </div>
-            </SelectBox>
-            <SelectBox flex="0.1">
-              <span>Children</span>
-              <div className="dateWrapper">
-                <Select
-                  labelInValue
-                  defaultValue={{ value: kid }}
-                  onChange={(e) => setKid(e.value)}
-                  bordered={false}
-                >
-                  <Option value="0">0</Option>
-                  <Option value="1">1</Option>
-                  <Option value="2">2</Option>
-                  <Option value="3">3</Option>
-                  <Option value="4">4</Option>
-                  <Option value="5">5</Option>
-                  <Option value="6">6</Option>
-                </Select>
-              </div>
-            </SelectBox>
+            <div className="selectBox">
+              <SelectBox flex="0.1">
+                <span>Adult</span>
+                <div className="dateWrapper">
+                  <Select
+                    labelInValue
+                    defaultValue={{ value: adult }}
+                    onChange={(e) => setAdult(e.value)}
+                    bordered={false}
+                  >
+                    <Option value="1">1</Option>
+                    <Option value="2">2</Option>
+                    <Option value="3">3</Option>
+                    <Option value="4">4</Option>
+                    <Option value="5">5</Option>
+                    <Option value="6">6</Option>
+                  </Select>
+                </div>
+              </SelectBox>
+              <SelectBox flex="0.1">
+                <span>Children</span>
+                <div className="dateWrapper">
+                  <Select
+                    labelInValue
+                    defaultValue={{ value: kid }}
+                    onChange={(e) => setKid(e.value)}
+                    bordered={false}
+                  >
+                    <Option value="0">0</Option>
+                    <Option value="1">1</Option>
+                    <Option value="2">2</Option>
+                    <Option value="3">3</Option>
+                    <Option value="4">4</Option>
+                    <Option value="5">5</Option>
+                    <Option value="6">6</Option>
+                  </Select>
+                </div>
+              </SelectBox>
+            </div>
             <Button
               label="Check availability"
               bg="var(--yellow)"

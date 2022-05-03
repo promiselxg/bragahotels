@@ -25,16 +25,27 @@ const SectionWrapper = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    width: 90%;
+    margin: 0 auto;
+    padding-bottom: 30px;
+  }
 `;
 const Bg = styled.div`
   &:nth-child(1) {
     height: 200px;
     width: 100%;
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      height: 0;
+    }
   }
   &:nth-child(2) {
     background: var(--yellow);
     height: 250px;
     width: 100%;
+    @media screen and (min-width: 320px) and (max-width: 768px) {
+      height: 0;
+    }
   }
 `;
 const SectionContainer = styled.div`
@@ -43,6 +54,9 @@ const SectionContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    position: relative;
+  }
 `;
 const RoomCard = styled.div`
   width: 300px;
@@ -50,6 +64,13 @@ const RoomCard = styled.div`
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: hidden;
+
+  @media screen and (min-width: 320px) and (max-width: 768px) {
+    margin-bottom: 20px;
+  }
+  @media screen and (min-width: 376px) and (max-width: 480px) {
+    width: 350px;
+  }
 `;
 const CardHeading = styled.div`
   height: 200px;
