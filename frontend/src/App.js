@@ -10,22 +10,29 @@ import {
   PageNotFound,
   RoomCategoryScreen,
   CheckOutScreen,
+  LoginScreen,
+  Dashboard,
 } from './screens';
 
 function App() {
   return (
     <>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<HomeScreen />} />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomeScreen />} />
           <Route path="/rooms" element={<RoomScreen />} />
           <Route path="/room/:id" element={<RoomInfoScreen />} />
           <Route path="/rooms/:category" element={<RoomCategoryScreen />} />
           <Route path="/rooms/:roomid/book" element={<CheckOutScreen />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-        <ToastContainer hideProgressBar newestOnTop={true} />
-      </Layout>
+        </Route>
+        <Route path="/admin">
+          <Route index element={<Dashboard />} />
+          <Route path="reservations" element={<Dashboard />} />
+        </Route>
+        <Route path="/auth/login" element={<LoginScreen />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+      <ToastContainer hideProgressBar newestOnTop={true} />
     </>
   );
 }

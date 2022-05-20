@@ -9,6 +9,7 @@ export { default as About } from '../sections/About/About';
 export { NavLink } from './NavAnchor';
 export { default as SideBar } from './Search/SideBarSearch';
 export { default as Header } from './Header/Header';
+export { default as HeaderDashboard } from './Header/DashboardHeader';
 export { default as Search } from './Search/Search';
 export { default as Filter } from './Search/Filter';
 export { default as Footer } from './Footer/Footer';
