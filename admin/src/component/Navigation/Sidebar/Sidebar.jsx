@@ -65,7 +65,7 @@ const Sidebar = () => {
             items={items}
           /> */}
           <li>
-            <Link to="/booking">
+            <Link to="/bookings">
               <span className="icon">
                 <FiCalendar className="__icon" />
               </span>

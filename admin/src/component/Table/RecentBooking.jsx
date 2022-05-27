@@ -78,13 +78,13 @@ const data = [
   },
 ];
 
-const RecentBooking = () => {
+const RecentBooking = ({ title }) => {
   return (
     <>
       <TableWrapper>
         <div className="table__wrapper">
           <div className="left">
-            <h1>Recent Bookings</h1>
+            <h1>{title}</h1>
           </div>
           <div className="right">
             <div className="search">

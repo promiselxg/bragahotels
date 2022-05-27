@@ -77,7 +77,7 @@ const Dashboard = () => {
           </DashboardStats>
           <DashboardTableStats>
             <div className="dashboard__tablestats__container">
-              <RecentBooking />
+              <RecentBooking title="Recent Bookings" />
             </div>
           </DashboardTableStats>
         </Content>
