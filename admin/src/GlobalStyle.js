@@ -10,25 +10,55 @@ const GlobalStyle = createGlobalStyle`
 /* ::-webkit-scrollbar {
                 display: none;
             } */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
 :root{
   --yellow:#febb02;
   --blue:#0071c2;
   --light-blue:#ebf3ff;
+  --black1:#222;
+  --black2:#999;
+  --white:#fff;
 }
 body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
+  
+  font-family: 'Nunito', sans-serif;
   font-size:16px;
-  transition: all 0.5s ease;
-}
-h2{
-  font-family:'Kinn' ;
+  overflow-x:hidden ;
+  background:#f5f6fa ;
+  color:#364a63;
+  /* transition: all 0.5s ease; */
 }
 a{
   text-decoration: none;
 }
-h1{
-  font-size: 3rem;
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-family: Nunito,sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #364a63;
+}
+p{
+  color: #8094ae !important;
 }
 `;
 
