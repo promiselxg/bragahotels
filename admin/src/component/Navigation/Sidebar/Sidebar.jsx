@@ -42,10 +42,8 @@ const Sidebar = () => {
         <ul>
           <li>
             <Link to="/">
-              <span className="icon">
-                <FiMenu className="__icon" />
-              </span>
-              <span className="title">Brand Name</span>
+              <span className="icon"></span>
+              <span className="title">Braga Hotels.</span>
             </Link>
           </li>
           <li>
@@ -70,7 +68,7 @@ const Sidebar = () => {
                 <FiCalendar className="__icon" />
               </span>
               <span className="title">
-                <span>Bookings</span>
+                <span>Reservations</span>
                 <span>
                   <FiPlus />
                 </span>

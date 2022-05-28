@@ -37,6 +37,15 @@ const GlobalStyle = createGlobalStyle`
   --black2:#999;
   --white:#fff;
 }
+.menu {
+  display: flex;
+  align-items:center ;
+  gap:10px !important;
+}
+.filterMenu{
+  width:300px;
+  padding:10px 20px;
+}
 body {
   
   font-family: 'Nunito', sans-serif;
@@ -80,4 +89,41 @@ export const Typography = styled.h1`
   color: ${(props) => (props.color ? props.color : '')};
 `;
 
+export const TableHeader = styled.div`
+  width: 100%;
+
+  .header__search {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px 20px 0 20px;
+    align-items: center;
+
+    .search__wrapper {
+      flex: 0.6;
+      width: 100%;
+      display: flex;
+      padding: 10px;
+      gap: 10px;
+      color: var(--blue);
+      align-items: center;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      input {
+        background: transparent;
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+        font-weight: 600;
+      }
+    }
+    .filter__wrapper {
+      padding-right: 20px;
+      cursor: pointer;
+    }
+  }
+`;
 export default GlobalStyle;
