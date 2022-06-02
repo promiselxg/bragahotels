@@ -57,7 +57,7 @@ const updateCategory = asyncHandler(async (req, res) => {
       res.status(404);
       throw new Error('This ID does not exist.');
     }
-    const response = await Category.findByIdAndUpdate(
+    await Category.findByIdAndUpdate(
       id,
       {
         $set: req.body,
@@ -113,7 +113,7 @@ const singleCategory = asyncHandler(async (req, res) => {
         message: 'The Category ID does not exist.',
       });
     }
-    const response = await Category.findOne({ id });
+    const response = await Category.findOne({ _id: id });
     return res.status(200).json({
       status: 'success',
       data: response,

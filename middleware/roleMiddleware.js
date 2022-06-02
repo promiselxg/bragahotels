@@ -11,6 +11,7 @@ const verifyUserRoles = (...allowedRoles) => {
       .map((role) => rolesArray.includes(role))
       .find((val) => val === true);
     if (!result) {
+      res.status(401);
       throw new Error('Access denied!!!');
     }
     next();

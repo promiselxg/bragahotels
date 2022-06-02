@@ -17,8 +17,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/v2', require('./routes/roomRoutes'));
+app.use('/api/v2/room', require('./routes/roomRoutes'));
 app.use('/api/v2/category', require('./routes/categoryRoutes'));
+app.use('/api/v2/auth', require('./routes/authRoutes'));
 //  404 route
 app.use('*', (req, res) =>
   res.status(404).json({ message: 'The requested route does not exist' })
