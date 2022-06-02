@@ -25,10 +25,10 @@ const newCategory = asyncHandler(async (req, res) => {
   }
   try {
     //    check if category exist
-    const nameExist = await Category.findOne({ name: name });
+    const nameExist = await Category.findOne({ type: type });
     if (nameExist) {
       res.status(400);
-      throw new Error('Category name already exist.');
+      throw new Error('Category already exist.');
     }
     //    save to db
     const response = await Category.create({ name, type, cheapestPrice });
@@ -36,6 +36,7 @@ const newCategory = asyncHandler(async (req, res) => {
       return res.status(200).json({
         status: 'success',
         message: 'New category created successfully.',
+        data: response,
       });
     }
   } catch (error) {
