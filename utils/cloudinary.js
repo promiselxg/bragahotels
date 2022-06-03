@@ -7,6 +7,20 @@ cloudinary.config({
   secure: true,
 });
 
+const removeUploadedImage = async (imageArray, preset) => {
+  imageArray.map((img) =>
+    cloudinary.api.delete_resources(
+      `${preset}/${img}`,
+      function (error, result) {
+        if (error) {
+          res.status(400);
+          throw new Error(error);
+        }
+      }
+    )
+  );
+};
 module.exports = {
   cloudinary,
+  removeUploadedImage,
 };
