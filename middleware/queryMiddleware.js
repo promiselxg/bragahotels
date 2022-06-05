@@ -20,18 +20,18 @@ const queryFilter = (model, populate) => async (req, res, next) => {
 
   //  Finding Resource
   if (Object.keys(req.query).length === 0) {
-    query = model.find({ isApproved: true });
+    query = model.find();
   } else {
     query = model.find(JSON.parse(queryStr));
   }
 
-  //  Select fields /api/coins?select=field1,field2....
+  //  Select fields ?select=field1,field2....
   if (req.query.select) {
     const fields = req.query.select.split(',').join(' ');
     query = query.select(fields);
   }
 
-  //  Sort by multiple fields /api/coins?sort=field1,field2....[-prefix for descending]
+  //  Sort by multiple fields ?sort=field1,field2....[-prefix for descending]
   if (req.query.sort) {
     const sortBy = req.query.sort.split(',').join(' ');
     query = query.sort(sortBy);
@@ -39,7 +39,7 @@ const queryFilter = (model, populate) => async (req, res, next) => {
     query = query.sort({ _id: -1, vote: 1 });
   }
 
-  //  Pagination /api/coins?page=1&limit=2
+  //  Pagination ?page=1&limit=2
   const page = parseInt(req.query.page, 10) || 1;
   const limit = parseInt(req.query.limit, 10) || 20;
   const startIndex = (page - 1) * limit;

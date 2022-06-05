@@ -6,9 +6,11 @@ const {
   updateCategory,
   singleCategory,
 } = require('../controllers/categoryController');
+const { queryFilter } = require('../middleware/queryMiddleware');
+const Category = require('../models/categoryModel');
 const router = express.Router();
 
-router.route('/').get(getAllCategory).post(newCategory);
+router.route('/').get(queryFilter(Category), getAllCategory).post(newCategory);
 router
   .route('/:id')
   .delete(deleteCategory)

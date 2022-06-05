@@ -5,14 +5,17 @@ const {
   updateRoom,
   deleteRoom,
   getSingleRoom,
+  getRoomsByCategory,
 } = require('../controllers/roomController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const { verifyUserRoles } = require('../middleware/roleMiddleware');
 const { uploadFile } = require('../middleware/uploadMiddleware');
+const { queryFilter } = require('../middleware/queryMiddleware');
+const Rooms = require('../models/roomModel');
 const ROLES = require('../utils/roles');
 const router = express.Router();
 
-router.route('/').get(getAllRooms);
+router.route('/').get(queryFilter(Rooms), getAllRooms);
 router
   .route('/new')
   .post(
@@ -30,6 +33,6 @@ router
     updateRoom
   )
   .delete(verifyToken, verifyUserRoles(ROLES.admin), deleteRoom)
-  .get(verifyToken, verifyUserRoles(ROLES.user, ROLES.admin), getSingleRoom);
-
+  .get(getSingleRoom);
+router.route('/category/:catid').get(getRoomsByCategory);
 module.exports = router;

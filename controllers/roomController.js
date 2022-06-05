@@ -290,19 +290,59 @@ const getSingleRoom = asyncHandler(async (req, res) => {
 });
 //  Get all Rooms
 const getAllRooms = asyncHandler(async (req, res) => {
+  res.status(200).json(res.queryResults);
+  // try {
+  //   const rooms = await Room.find().sort({ _id: -1 }).select('-__v');
+  //   return res.status(200).json({
+  //     status: 'success',
+  //     count: rooms.length,
+  //     data: rooms,
+  //   });
+  // } catch (error) {
+  //   res.status(400);
+  //   throw new Error(error);
+  // }
+});
+
+//  Get Rooms by Category
+const getRoomsByCategory = asyncHandler(async (req, res) => {
+  const { catid } = req.params;
+  if (!catid) {
+    res.status(401);
+    throw new Error('Invalid Category ID.');
+  }
   try {
-    const rooms = await Room.find().sort({ _id: -1 }).select('-__v');
+    const category = await Category.findById(catid);
+    if (!category) {
+      res.status(401);
+      throw new Error('Invalid Category ID.');
+    }
+    //  Get Category Name
+    const { name: categoryName } = await Category.findById(catid).select({
+      name: 1,
+    });
+    //  Get all Rooms associated to a particular category
+    const list = await Promise.all(
+      category.rooms.map((room) => {
+        return Room.findById(room).select({
+          title: 1,
+          price: 1,
+          imgThumbnail: 1,
+        });
+      })
+    );
+    //  Return data
     return res.status(200).json({
       status: 'success',
-      count: rooms.length,
-      data: rooms,
+      count: list.length,
+      categoryName,
+      data: list,
     });
   } catch (error) {
     res.status(400);
     throw new Error(error);
   }
 });
-
 //  upload multiple image function
 const cloudinaryImageUploadMethod = asyncHandler(async (file) => {
   return new Promise((resolve) => {
@@ -327,4 +367,5 @@ module.exports = {
   updateRoom,
   deleteRoom,
   getSingleRoom,
+  getRoomsByCategory,
 };
