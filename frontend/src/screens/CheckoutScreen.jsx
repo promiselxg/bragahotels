@@ -143,26 +143,26 @@ const CheckoutScreen = () => {
     window.scrollTo(0, 0);
   }, [dispatch, id]);
 
-  const initializePayment = usePaystackPayment(config);
+  // const initializePayment = usePaystackPayment(config);
 
-  useEffect(() => {
-    if (isSuccess) {
-      initializePayment(
-        (reference) => {
-          const response = reference;
-          const data = {
-            roomid: id,
-            referenceNo: response.reference,
-            status: response.status,
-            transactionId: response.transaction,
-          };
-          dispatch(processPayment(data));
-        },
-        () => console.log('closed')
-      );
-    }
-    dispatch(reset());
-  }, [dispatch, isSuccess, initializePayment, id]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     initializePayment(
+  //       (reference) => {
+  //         const response = reference;
+  //         const data = {
+  //           roomid: id,
+  //           referenceNo: response.reference,
+  //           status: response.status,
+  //           transactionId: response.transaction,
+  //         };
+  //         dispatch(processPayment(data));
+  //       },
+  //       () => console.log('closed')
+  //     );
+  //   }
+  //   dispatch(reset());
+  // }, [dispatch, isSuccess, initializePayment, id]);
 
   const { data } = useFetch(`/category/${room?.data?.category}`);
 

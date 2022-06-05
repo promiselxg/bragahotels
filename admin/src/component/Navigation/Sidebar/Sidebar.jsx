@@ -76,7 +76,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/room">
+            <Link to="/rooms">
               <span className="icon">
                 <FiHome className="__icon" />
               </span>
@@ -89,7 +89,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/customer">
+            <Link to="/customers">
               <span className="icon">
                 <FaUser className="__icon" />
               </span>
@@ -97,7 +97,7 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/payment">
+            <Link to="/payments">
               <span className="icon">
                 <FaDatabase />
               </span>

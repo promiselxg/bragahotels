@@ -3,6 +3,7 @@ import axios from 'axios';
 const API_URL = '/rooms';
 const config = {
   'Content-Type': 'appilcation/json',
+  'Access-Control-Allow-Origin': '*',
 };
 //  Get all rooms
 const getAllRooms = async (data) => {
@@ -41,11 +42,12 @@ const filterRoom = async (data) => {
   return response.data;
 };
 
-//  Room Reservation /api/v1/rooms/:id/book
+//  Room Reservation /api/v2/reservation/:id
 
 const roomReservation = async (data) => {
   const { roomid } = data.roomInfo;
-  const response = await axios.post(`${API_URL}/${roomid}/book`, data, config);
+  const response = await axios.post(`/reservation/${roomid}`, data, config);
+  console.log(response.data);
   return response.data;
 };
 const payment = async (data) => {

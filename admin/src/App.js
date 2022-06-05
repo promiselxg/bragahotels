@@ -4,6 +4,7 @@ import {
   AddBooking,
   AddRooms,
   Bookings,
+  Customers,
   Dashboard,
   EditBooking,
   EditRoom,
@@ -16,10 +17,11 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Dashboard />} />
         <Route path="/rooms" element={<Rooms />} />
-        <Route path="/rooms/new" element={<AddRooms />} />
-        <Route path="/rooms/:id/edit" element={<EditRoom />} />
         <Route path="/bookings" element={<Bookings />} />
+        <Route path="/customers" element={<Customers />} />
+        <Route path="/rooms/new" element={<AddRooms />} />
         <Route path="/bookings/new" element={<AddBooking />} />
+        <Route path="/rooms/:id/edit" element={<EditRoom />} />
         <Route path="/bookings/:id/edit" element={<EditBooking />} />
       </Route>
     </Routes>
