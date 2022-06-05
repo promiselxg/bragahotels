@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/v1/rooms';
+const API_URL = '/rooms';
 const config = {
   'Content-Type': 'appilcation/json',
 };
@@ -30,8 +30,8 @@ const getRoomDetails = async (roomid) => {
 };
 
 //  get rooms by category
-const getRoomsByCategory = async (data) => {
-  const response = await axios.post(`${API_URL}/filter`, data, config);
+const getRoomsByCategory = async (catid) => {
+  const response = await axios.get(`${API_URL}/category/${catid}`);
   return response.data;
 };
 

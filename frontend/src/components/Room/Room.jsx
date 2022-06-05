@@ -14,21 +14,21 @@ const Room = () => {
       {isLoading ? (
         <Skeleton />
       ) : (
-        rooms?.data.map((room, i) => (
+        rooms?.data?.map((room, i) => (
           <div className="room" key={i}>
             <RoomWrapper>
               <div className="container">
                 <div className="room__left">
-                  <Link to={`/room/${room.roomid}`}>
-                    <Image img={room.thumbnail} alt={room.title} />
+                  <Link to={`/room/${room?._id}`}>
+                    <Image img={room?.imgThumbnail} alt={room?.title} />
                   </Link>
                 </div>
                 <div className="room__center">
                   <div className="room__title">
                     <Typography as="h2" fontSize="1.2rem" fontWeight="600">
                       <Links
-                        to={`/room/${room.roomid}`}
-                        label={room.title}
+                        to={`/room/${room?._id}`}
+                        label={room?.title}
                         style={{ textTransform: 'capitalize' }}
                       />
                     </Typography>
@@ -63,7 +63,7 @@ const Room = () => {
                     </div>
                     <div className="rating__count">6.5</div>
                   </div>
-                  <Link to={`/rooms/${room.roomid}/book`}>
+                  <Link to={`/rooms/${room?._id}/book`}>
                     <Button
                       bg="var(--blue)"
                       color="#fff"

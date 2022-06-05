@@ -10,8 +10,6 @@ import {
   PageNotFound,
   RoomCategoryScreen,
   CheckOutScreen,
-  LoginScreen,
-  Dashboard,
 } from './screens';
 
 function App() {
@@ -25,11 +23,6 @@ function App() {
           <Route path="/rooms/:category" element={<RoomCategoryScreen />} />
           <Route path="/rooms/:roomid/book" element={<CheckOutScreen />} />
         </Route>
-        <Route path="/admin">
-          <Route index element={<Dashboard />} />
-          <Route path="reservations" element={<Dashboard />} />
-        </Route>
-        <Route path="/auth/login" element={<LoginScreen />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer hideProgressBar newestOnTop={true} />

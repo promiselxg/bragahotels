@@ -38,7 +38,7 @@ export const RoomContent = styled.div`
   .container {
     display: flex;
     width: 100%;
-   }
+  }
 `;
 
 export const LeftWrapper = styled.aside`
@@ -123,12 +123,17 @@ export const RightWrapper = styled.div`
 
   .room {
     width: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.3);
     padding: 10px;
     border-radius: 5px;
     height: 250px;
     margin: 16px 0;
-    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 1px 5px rgba(0 0 0 / 15%);
+    background: #fff;
+    transition: all 0.3s ease-in;
+    :hover {
+      box-shadow: 0 2px 8px rgba(0 113 194 / 15%);
+      cursor: pointer;
+    }
   }
   .heading {
     padding: 15px 0 0 0;

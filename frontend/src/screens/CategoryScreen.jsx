@@ -2,7 +2,7 @@ import { Breadcrumb, Rate, Skeleton } from 'antd';
 import React, { useEffect } from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Button, Filter, Image, Section, SideBar } from '../components';
 import { Links } from '../components/NavAnchor';
@@ -14,6 +14,7 @@ import {
   RoomHeader,
 } from '../components/Room/Room.style';
 import { Typography } from '../GlobalStyle';
+import useFetch from '../hooks/useFetch';
 import { getRoomByCategory } from '../redux/room/roomCategorySlice';
 import { setSuccess } from '../redux/room/roomSlice';
 import {
@@ -26,14 +27,15 @@ import { FilterBox } from '../styles/Filter.style';
 
 const CategoryScreen = () => {
   const { isLoading, rooms } = useSelector((state) => state.roomCategory);
+  const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getRoomByCategory(params));
+    dispatch(getRoomByCategory(params.category));
     dispatch(setSuccess());
     window.scrollTo(0, 0);
-  }, [dispatch, params]);
-
+  }, [dispatch, params.category]);
+  const { data } = useFetch(`/category/${params.category}`);
   return (
     <>
       <Section>
@@ -49,11 +51,11 @@ const CategoryScreen = () => {
               <Breadcrumb.Item className="seperator">
                 <Links
                   to={`/rooms/${params.category}`}
-                  label={params.category}
+                  label={data?.data?.name}
                 />
               </Breadcrumb.Item>
               <Breadcrumb.Item className="seperator">
-                <i>{params.category} room listing</i>
+                <i>{rooms.categoryName} room listing</i>
               </Breadcrumb.Item>
             </Breadcrumb>
           </RoomHeader>
@@ -75,7 +77,7 @@ const CategoryScreen = () => {
                     fontWeight="600"
                     style={{ textTransform: 'capitalize' }}
                   >
-                    {params.category} Rooms Category Listing (
+                    {rooms.categoryName} Rooms Category Listing (
                     {rooms.data ? rooms.data.length : 0})
                   </Typography>
                 </div>
@@ -85,11 +87,14 @@ const CategoryScreen = () => {
                   <>
                     <RoomCardWrapper>
                       {rooms?.data?.map((room) => (
-                        <Link to={`/room/${room.roomid}`} key={room.roomid}>
+                        <Link to={`/room/${room._id}`} key={room._id}>
                           <RoomCard>
                             <div className="container">
                               <RoomCardImg>
-                                <Image img={room.thumbnail} alt={room.title} />
+                                <Image
+                                  img={room.imgThumbnail}
+                                  alt={room.title}
+                                />
                               </RoomCardImg>
                               <RoomCardBody>
                                 <div className="room__name">
@@ -143,15 +148,16 @@ const CategoryScreen = () => {
                                   )}
                                 </div>
                                 <div className="room__btn">
-                                  <Link to={`/rooms/${room.roomid}/book`}>
-                                    <Button
-                                      bg="#000"
-                                      color="#fff"
-                                      label="Book now"
-                                      hoverBg="var(--yellow)"
-                                      hoverColor="#000"
-                                    />
-                                  </Link>
+                                  <Button
+                                    bg="#000"
+                                    color="#fff"
+                                    label="Book now"
+                                    hoverBg="var(--yellow)"
+                                    hoverColor="#000"
+                                    onClick={() =>
+                                      navigate(`/rooms/${room._id}/book`)
+                                    }
+                                  />
                                 </div>
                               </RoomCardBody>
                             </div>

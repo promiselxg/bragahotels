@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../../components';
 import { FiStar } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
 import { Container, Typography } from '../../GlobalStyle';
 import NumberFormat from 'react-number-format';
 import { Skeleton } from 'antd';
+import useFetch from '../../hooks/useFetch';
 const Wrapper = styled.div`
   width: 100%;
   text-align: center;
@@ -97,7 +97,8 @@ const CardInfo = styled.div`
   }
 `;
 const RoomsSection = () => {
-  const { rooms, isLoading } = useSelector((state) => state.listRooms);
+  const { data, loading } = useFetch(`/rooms`);
+  console.log(data);
   return (
     <>
       <Container maxWidth="1000px">
@@ -115,19 +116,19 @@ const RoomsSection = () => {
         <Bg></Bg>
         <Container>
           <SectionContainer>
-            {isLoading ? (
-              <Skeleton />
+            {loading ? (
+              <Skeleton active={loading} />
             ) : (
               <>
-                {rooms?.data?.map((room, i) => (
+                {data?.data?.map((room, i) => (
                   <RoomCard key={i}>
-                    <Link to={`/room/${room.roomid}`}>
-                      <CardHeading bg={room.thumbnail}></CardHeading>
+                    <Link to={`/room/${room._id}`}>
+                      <CardHeading bg={room.imgThumbnail}></CardHeading>
                     </Link>
 
                     <CardBody>
                       <CardTitle>
-                        <Link to={`/room/${room?.roomid}`}>
+                        <Link to={`/room/${room?._id}`}>
                           <Typography
                             as="h2"
                             fontSize="1rem"
@@ -198,7 +199,7 @@ const RoomsSection = () => {
                           </>
                         )}
 
-                        <Link to={`/rooms/${room.roomid}/book`}>
+                        <Link to={`/rooms/${room._id}/book`}>
                           <Button
                             label="Book Now"
                             bg="var(--yellow)"

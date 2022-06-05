@@ -20,19 +20,31 @@ import { FiCheck, FiCheckCircle, FiCheckSquare, FiHeart } from 'react-icons/fi';
 import { getSingleRoom } from '../redux/room/singleRoomSlice';
 import { RoomHeader } from '../components/Room/Room.style';
 import PageNotFound from './404';
+import useFetch from '../hooks/useFetch';
 
 const RoomInfoScreen = () => {
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  let img1, img2;
   const [visible, setVisible] = useState(false);
   const { id } = useParams();
   const { room, isLoading, isError, message } = useSelector(
     (state) => state.roomInfo
   );
+  room?.data?.otherImg.length > 1
+    ? (img1 = room?.data?.otherImg[0])
+    : (img1 = room?.data?.otherImg);
+
+  room?.data?.otherImg.length > 2
+    ? (img2 = room?.data?.otherImg[1])
+    : (img2 = room?.data?.otherImg);
+
   useEffect(() => {
     dispatch(getSingleRoom(id));
     window.scrollTo(0, 0);
   }, [dispatch, id, pathname]);
+  const { data } = useFetch(`/category/${room?.data?.category}`);
+  console.log(data);
   return (
     <>
       <Section>
@@ -52,7 +64,7 @@ const RoomInfoScreen = () => {
                   <Breadcrumb.Item className="seperator">
                     <Links
                       to={`/rooms/${room?.data?.category}`}
-                      label={room?.data?.category}
+                      label={data?.data?.name}
                     />
                   </Breadcrumb.Item>
                   <Breadcrumb.Item className="seperator">
@@ -94,22 +106,14 @@ const RoomInfoScreen = () => {
                           <div className="left__image">
                             <ImageWrapper>
                               <Img
-                                src={
-                                  room?.data?.otherImg
-                                    .replace(/[[\]"]+/g, '')
-                                    .split(',')[1]
-                                }
+                                src={img1}
                                 preview={{ visible: false }}
                                 onClick={() => setVisible(true)}
                               />
                             </ImageWrapper>
                             <ImageWrapper>
                               <Img
-                                src={
-                                  room?.data?.otherImg
-                                    .replace(/[[\]"]+/g, '')
-                                    .split(',')[2]
-                                }
+                                src={img2}
                                 preview={{ visible: false }}
                                 onClick={() => setVisible(true)}
                               />
@@ -121,7 +125,7 @@ const RoomInfoScreen = () => {
                               <Img
                                 preview={{ visible: false }}
                                 onClick={() => setVisible(true)}
-                                src={room?.data?.thumbnail}
+                                src={room?.data?.imgThumbnail}
                               />
                             </ImageWrapper>
                           </div>
@@ -133,14 +137,11 @@ const RoomInfoScreen = () => {
                               onVisibleChange: (vis) => setVisible(vis),
                             }}
                           >
-                            {room?.data?.otherImg
-                              .replace(/[[\]"]+/g, '')
-                              .split(',')
-                              .map((img, i) => (
-                                <div key={i}>
-                                  <Image src={img} />
-                                </div>
-                              ))}
+                            {room?.data?.otherImg.map((img, i) => (
+                              <div key={i}>
+                                <Image src={img} />
+                              </div>
+                            ))}
                           </Image.PreviewGroup>
                         </div>
                       </RoomImageWrapper>

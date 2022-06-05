@@ -18,7 +18,7 @@ import {
   Right,
   RoomDetails,
 } from '../styles/CheckoutScreen.style';
-import { FiCheckCircle, FiMail, FiPhone, FiUser } from 'react-icons/fi';
+import { FiCheckCircle, FiMail, FiPhone, FiPlus, FiUser } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
 import { HotelRules } from '../utils/Data';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,6 +27,7 @@ import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { makeReservation, reset } from '../redux/room/roomReservationSlice';
 import { processPayment } from '../redux/room/roomPaymentSlice';
+import useFetch from '../hooks/useFetch';
 
 const { TextArea } = Input;
 
@@ -77,23 +78,23 @@ const CheckoutScreen = () => {
     publicKey: `${process.env.REACT_APP_PAYSTACK_KEY}`,
   };
 
-  // const addNewGuest = () => {
-  //   let _guestMember = [...guestMember];
-  //   _guestMember.push({
-  //     first_name: '',
-  //     last_name: '',
-  //     phone: '',
-  //     email: '',
-  //     id: uuidv4(),
-  //   });
-  //   setGuestMember(_guestMember);
-  // };
+  const addNewGuest = () => {
+    let _guestMember = [...guestMember];
+    _guestMember.push({
+      first_name: '',
+      last_name: '',
+      phone: '',
+      email: '',
+      id: uuidv4(),
+    });
+    setGuestMember(_guestMember);
+  };
 
-  // const removeGuestMember = (id) => {
-  //   let _guestMember = [...guestMember];
-  //   _guestMember = _guestMember.filter((guest) => guest.id !== id);
-  //   setGuestMember(_guestMember);
-  // };
+  const removeGuestMember = (id) => {
+    let _guestMember = [...guestMember];
+    _guestMember = _guestMember.filter((guest) => guest.id !== id);
+    setGuestMember(_guestMember);
+  };
 
   const handleInputFieldChange = (id, event) => {
     // get input index to be changed
@@ -162,6 +163,9 @@ const CheckoutScreen = () => {
     }
     dispatch(reset());
   }, [dispatch, isSuccess, initializePayment, id]);
+
+  const { data } = useFetch(`/category/${room?.data?.category}`);
+
   return (
     <>
       {isError && <Notification message={message} type="error" />}
@@ -181,7 +185,7 @@ const CheckoutScreen = () => {
               <Breadcrumb.Item className="seperator">
                 <Links
                   to={`/rooms/${room?.data?.category}`}
-                  label={room?.data?.category}
+                  label={data?.data?.name}
                 />
               </Breadcrumb.Item>
               <Breadcrumb.Item className="seperator">
@@ -269,7 +273,7 @@ const CheckoutScreen = () => {
                                 </p>
                               </div>
                             </div>
-                            {/* <div
+                            <div
                               className="btn"
                               style={{ display: 'flex', margin: '0px 5px' }}
                             >
@@ -302,7 +306,7 @@ const CheckoutScreen = () => {
                                   Remove Guest
                                 </span>
                               )}
-                            </div> */}
+                            </div>
                           </div>
                         ))}
 
